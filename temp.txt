@@ -1,0 +1,78 @@
+import * as DATABASE from './database.js'
+
+const title_div = document.querySelector('.home-div #title-div')
+const login_div = document.querySelector('.home-div .login-div')
+const sign_up_lbl = document.querySelector('.home-div .login-div #sign-up-lbl')
+const hr_sign_in_lbl = document.querySelector('.home-div .login-div #hr-sign-in-lbl')
+const username_input = document.querySelector('.home-div .login-div form #user-name-input')
+const password_input = document.querySelector('.home-div .login-div form #password-input')
+const login_btn = document.querySelector('.home-div .login-div form #login-btn')
+const back_btn = document.querySelector('.home-div .login-div #back-btn')
+
+const btn_div_mobile = document.querySelector('.home-div .btn-div-mobile')
+const sign_up_btn_mobile = document.querySelector('#sign-up-btn-mobile')
+const sign_in_btn_mobile = document.querySelector('#sign-in-btn-mobile')
+const back_btn_mobile = document.querySelector('.home-div .login-div #back-btn-mobile')
+
+sign_up_lbl.addEventListener('click', () => {
+    hr_sign_in_lbl.textContent = 'Sign Up'
+    sign_up_lbl.style.display = 'none'
+    login_btn.textContent = "Sign In"
+
+    back_btn.style.display = 'block'
+}, false)
+
+back_btn.addEventListener('click', () => {
+    hr_sign_in_lbl.textContent = 'Sign In'
+    sign_up_lbl.style.display = 'block'
+    login_btn.textContent = "Log In"
+
+    back_btn.style.display = 'none'
+},false)
+
+login_btn.addEventListener('click', () => {
+    if(username_input.value != "" && password_input.value != ""){
+        // window.location.href = "http://www.w3schools.com"
+        DATABASE.users_accounts[0].username = username_input.value
+        DATABASE.users_accounts[0].password = password_input.value
+        
+        window.location="./components/main.html";
+    }
+})
+
+sign_in_btn_mobile.addEventListener('click',()=>{
+    title_div.style.display = 'none'
+    login_div.style.display = 'block'
+
+    btn_div_mobile.style.display = 'none'
+
+    back_btn_mobile.style.display = 'block'
+    back_btn_mobile.style.border = 'none'
+},false)
+
+sign_up_btn_mobile.addEventListener('click',()=>{
+    title_div.style.display = 'none'
+    login_div.style.display = 'block'
+
+    btn_div_mobile.style.display = 'none'
+
+    hr_sign_in_lbl.textContent = 'Sign Up'
+    sign_up_lbl.style.display = 'none'
+    login_btn.textContent = "Sign In"
+
+    back_btn_mobile.style.display = 'block'
+    back_btn_mobile.style.border = 'none'
+
+},false)
+
+back_btn_mobile.addEventListener('click', () => {
+    title_div.style.display = 'block'
+    login_div.style.display = 'none'
+
+    hr_sign_in_lbl.textContent = 'Sign In'
+    login_btn.textContent = "Log In"
+
+    btn_div_mobile.style.display = 'block'
+
+},false)
+

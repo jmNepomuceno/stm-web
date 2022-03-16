@@ -1,0 +1,227 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* overflow: hidden; */
+}
+
+body{
+    font-size: 1.125rem;
+}
+
+.home-div{
+    width:100%;
+    min-height:100vh;
+    background:lightblue;
+    /* background: url('./imgs/index_bg.png');
+    background-size: 100% 100%;
+    background-position: center; */
+}
+
+.home-div #home-img{
+    position: absolute;
+    width:65%;
+    height:100%;
+    opacity: 0.5;
+}
+
+.home-div #title-div{
+    position: absolute;
+    top:32%;
+    left:10%;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3.7rem;
+    font-weight: bold;
+    letter-spacing:1px;
+    /* border:1px solid black; */
+    width:45%;
+    color: #2a2b2dff;
+    /* color: #fcf6f5ff; */
+    text-align:left;
+}
+
+.home-div .login-div{
+    position: absolute;
+    top:22%;
+    right:4%;
+    width:30%;
+    height:55%;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.home-div .login-div #login-icon-div{
+    position: absolute;
+    left:40%;
+    top: 5%;
+    /* border:1px solid black; */
+    width:20%;
+    height:15%;
+    /* border-radius: 50%; */
+    background: url(./imgs/sign_in_icon.png);
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.home-div .login-div #hr-1,
+.home-div .login-div #hr-2{
+    position: absolute;
+    top:23%;
+    width:30%;
+    background:black;
+}
+.home-div .login-div #hr-1{
+    left:10%;
+}
+
+.home-div .login-div #hr-2{
+    right:10%;
+}
+
+.home-div .login-div #hr-sign-in-lbl{
+    position: absolute;
+    top: 23%;
+    left:44%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.home-div .login-div form #user-name-input,
+.home-div .login-div form #password-input{
+    position: absolute;
+    left:10%;
+    width:80%;
+    height:12%;
+
+}
+
+.home-div .login-div form #user-name-input{
+    top:35%;
+}
+
+.home-div .login-div form #password-input{
+    top:53%;
+}
+
+input[type=text],
+input[type=password]{
+    padding-left: 25px;
+}
+
+.home-div .login-div form #login-btn{
+    position: absolute;
+    top:71%;
+    left:10%;
+    width:80%;
+    height:12%;
+}
+
+.home-div .login-div #sign-up-lbl{
+    position: absolute;
+    top: 88%;
+    left:43%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    text-decoration: underline;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.home-div .login-div #back-btn,
+.home-div .login-div #back-btn-mobile{
+    position: absolute;
+    top:5%;
+    left:5%;
+    width:10%;
+    height:7%;
+    background: url('./imgs/back_btn_mobile.png');
+    background-size: 100% 100%;
+    background-position: center;
+    opacity: 0.5;
+    /* display:none; */
+    cursor: pointer;
+}
+
+.home-div .login-div #back-btn-mobile{
+    display:none;
+}
+
+.home-div .btn-div-mobile{
+    display:none;
+}
+
+/* $mobile : 576px;
+$tablet : 768px;
+$laptop : 992px;
+$desktop : 1200px; */
+
+@media (max-width: 576px){
+    .home-div #home-img{
+        width:100%;
+    }
+
+    .home-div #title-div{
+        top:20%;
+        left:0;
+        width:100%;
+        font-size: 3.5rem;
+        text-align: center;
+
+        /* display:none; */
+
+    }
+
+    .home-div .login-div{
+        display:none;
+
+        /* display:block; */
+
+        top:22%;
+        left:10%;
+        width:80%;
+        height:55%;
+    }
+
+    .home-div .login-div #hr-1,
+    .home-div .login-div #hr-2{
+        width:27%;
+    }
+
+    .home-div .login-div #hr-sign-in-lbl{
+        left:41%;
+    }
+
+    .home-div .login-div #sign-up-lbl{
+        display:none;
+    }
+
+    .home-div .btn-div-mobile{
+        display:block;
+        position: absolute;
+        bottom:5%;
+        left:10%;
+        width:80%;
+        height:6%;
+    }
+
+    .home-div .btn-div-mobile #sign-up-btn-mobile,
+    .home-div .btn-div-mobile #sign-in-btn-mobile{
+        width:40%;
+    }
+
+    .home-div .btn-div-mobile #sign-up-btn-mobile{
+        float:right;
+    }
+
+    .home-div #back-btn-mobile{
+        display:block;
+        position: absolute;
+        top:5%;
+        left:5%;
+        width:10%;
+        height:5%;
+        border:1px solid black;
+        background: url('./imgs/back_btn_mobile.png');
+        background-size: 100% 100%;
+        background-position: center;
+    }
+}
