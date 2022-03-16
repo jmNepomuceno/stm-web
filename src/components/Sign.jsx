@@ -2,6 +2,7 @@ import React from 'react'
 
 const Sign = (props) => {
     //console.log(props)
+    
     return(
         <main className="home-div">
             <link
@@ -12,11 +13,17 @@ const Sign = (props) => {
             />
             <img id="home-img" src={require('../imgs/index_bg_2.png')} alt="img" />
 
-            <label id="title-div">
+            <label 
+                id="title-div"
+                style={{display : props.args.signState.title_div_txt_display}}
+            >
                 Scheduling & Task Monitoring Website
             </label>
 
-            <div className="login-div">
+            <div 
+                className="login-div"
+                style={{display : props.args.signState.login_div_display}}
+            >
                 <div id="login-icon-div"></div>
 
                 <hr id="hr-1"/>
@@ -36,7 +43,7 @@ const Sign = (props) => {
 
                 <label 
                     id="sign-up-lbl"
-                    style={{visibility: props.args.signState.sign_up_visibility}}
+                    style={{display: props.args.signState.sign_up_display}}
                     onClick={props.args.onSignUpClick}
                 >
                     Sign Up
@@ -44,19 +51,42 @@ const Sign = (props) => {
                 
                 <div 
                     id="back-btn" 
-                    style={{visibility: props.args.signState.back_btn_visibility}}
+                    style={{display: props.args.signState.back_btn_display}}
                     onClick={props.args.onBackBtnClick}
                 >
 
                 </div>
-                <div id="back-btn-mobile"></div>
+                <div 
+                    id="back-btn-mobile"
+                    style={{display : props.args.signState.back_btn_mobile_display}}
+                    onClick={props.args.onBackBtnMobileClick}
+                >
+
+                </div>
             </div>
 
             
 
-            <div className="btn-div-mobile">
-                <button type="button" className="btn btn-primary" id="sign-in-btn-mobile">Sign In</button>
-                <button type="button" className="btn btn-success" id="sign-up-btn-mobile">Sign Up</button>
+            <div 
+                className="btn-div-mobile"
+                style={{display : props.args.signState.btn_div_mobile_display}}
+            >
+                <button 
+                    type="button" 
+                    className="btn btn-primary" 
+                    id="sign-in-btn-mobile"
+                    onClick={props.args.onSignInMobileClick}
+                >
+                    Sign In
+                </button>
+                <button 
+                    type="button" 
+                    className="btn btn-success" 
+                    id="sign-up-btn-mobile"
+                    onClick={props.args.onSignUpMobileClick}
+                >
+                    Sign Up
+                </button>
             </div>
             
 
