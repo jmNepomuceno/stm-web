@@ -23,6 +23,10 @@ class Main extends React.Component {
         // }
 
         const date = new Date()
+        date.setDate(1)
+
+        // date.setMonth(4)
+        // date.setYear(2020)
 
         const months = [
             "January",
@@ -39,7 +43,36 @@ class Main extends React.Component {
             "December   "
         ]
 
-        console.log("github ano na potangina")
+        let days_forloop = []
+        
+        const lastDay = new Date(date.getFullYear(),date.getMonth() + 1,0).getDate();
+        
+        const prevlastDay = new Date(date.getFullYear(),date.getMonth(),0).getDate();
+
+        const lastDayIndex = new Date(date.getFullYear(),date.getMonth() + 1,0).getDay();
+        
+        const nextDays = 9
+
+        const firstDayIndex = date.getDay()
+        
+        for(let x = firstDayIndex; x > 0; x--){
+            days_forloop.push({cn:"prev-date", num : prevlastDay - x + 1})
+        }
+
+        for(let i = 1; i <= lastDay; i++){
+            days_forloop.push({cn:"", num : i})
+        }
+        
+        for(let j = 1; j <= nextDays; j++){
+            days_forloop.push({cn:"next-date", num : j})
+            console.log(j)
+        }
+
+        const days = days_forloop.map((val) => (
+            <div className={val.cn}>{val.num}</div>
+        ));
+
+        
 
         return (
             <React.Fragment>
@@ -76,8 +109,8 @@ class Main extends React.Component {
                                 <div className="month">
                                     <i className="i fas fa-angle-left prev"></i>
                                     <div className="date">
-                                        <h1>March</h1>
-                                        <p>Fri March 18, 2022</p>
+                                        <h1> {months[date.getMonth()]} </h1>
+                                        <p> {date.toDateString()} </p>
                                     </div>
                                     <i className="fas fa-angle-right next"></i>
                                 </div>
@@ -93,50 +126,8 @@ class Main extends React.Component {
                                 </div>
 
                                 <div className="days">
-                                    <div className="prev-date">27</div>
-                                    <div className="prev-date">28</div>
-
-                                    <div>1</div>
-                                    <div>2</div>
-                                    <div>3</div>
-                                    <div>4</div>
-                                    <div>5</div>
-                                    <div>6</div>
-                                    <div>7</div>
-                                    <div>8</div>
-                                    <div>9</div>
-                                    <div>10</div>
-                                    <div>11</div>
-                                    <div>12</div>
-                                    <div>13</div>
-                                    <div>14</div>
-                                    <div>15</div>
-                                    <div>16</div>
-                                    <div className="today">17</div>
-                                    <div>18</div>
-                                    <div>19</div>
-                                    <div>20</div>
-                                    <div>21</div>
-                                    <div>22</div>
-                                    <div>23</div>
-                                    <div>24</div>
-                                    <div>25</div>
-                                    <div>26</div>
-                                    <div>27</div>
-                                    <div>28</div>
-                                    <div>29</div>
-                                    <div>30</div>
-                                    <div>31</div>
-
-                                    <div className="next-date">1</div>
-                                    <div className="next-date">2</div>
-                                    <div className="next-date">3</div>
-                                    <div className="next-date">4</div>
-                                    <div className="next-date">5</div>
-                                    <div className="next-date">6</div>
-                                    <div className="next-date">7</div>
-                                    <div className="next-date">8</div>
-                                    <div className="next-date">9</div>
+                                    {days}
+                                    
                                 </div>
 
                             </div>
