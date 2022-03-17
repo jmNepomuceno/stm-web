@@ -39,6 +39,8 @@ class Main extends React.Component {
             "December   "
         ]
 
+        console.log("github ano na potangina")
+
         return (
             <React.Fragment>
                 <main className="home-main-div">
