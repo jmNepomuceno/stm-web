@@ -23,10 +23,15 @@ class Main extends React.Component {
         const handleNextMonth = () => {
             date.setMonth(date.getMonth() + 1)
             console.log(date.getMonth())
+            here(date.getMonth())
         }
 
         const handlePrevMonth = () => {
             date.setMonth(date.getMonth() - 1)
+        }
+
+        const here = (val) => {
+            console.log(val)
         }
         
         date.setDate(1)
