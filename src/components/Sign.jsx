@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 class Sign extends React.Component {
     constructor(){
@@ -137,18 +138,19 @@ class Sign extends React.Component {
                             onChange={this.handleSetUserAccount}
                             required 
                         />
-                        
-                        <button 
-                            type="submit" 
-                            className="btn btn-primary" 
-                            id="login-btn"
-                            onClick = {() => this.props.args.onLogInClick({
-                                username : this.state.username,
-                                password : this.state.password
-                            })}>
+                        <Link to="/home">
+                            <button 
+                                type="submit" 
+                                className="btn btn-primary" 
+                                id="login-btn"
+                                onClick = {() => this.props.args.onLogInClick({
+                                    username : this.state.username,
+                                    password : this.state.password
+                                })}>
 
-                            {this.state.sign.Log_in_btn_txt}
-                        </button>
+                                {this.state.sign.Log_in_btn_txt}
+                            </button>
+                        </Link>
                     </form>
     
                     <label 
