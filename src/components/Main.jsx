@@ -7,26 +7,29 @@ class Main extends React.Component {
 
         }
     }
-    render() { 
 
-        // let acc_counter = this.props.args.userAcc_counter
-        let acc_username = this.props.args.users_account[0].username
+    handleNextMonth = () =>{
 
-        // var get_today = new Date();
-        // var get_day = String(get_today.getDate()).padStart(2, '0');
-        // var get_month = String(get_today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        // var get_year = get_today.getFullYear();
+    }
+
+    handlePrevMonth = () =>{
         
-        // let today_month = ""
-        // switch (get_month){
-        //     case 0
-        // }
+    }
 
+    render() { 
+        let acc_username = this.props.args.users_account[0].username
         const date = new Date()
-        date.setDate(1)
+        
+        const handleNextMonth = () => {
+            date.setMonth(date.getMonth() + 1)
+            console.log(date.getMonth())
+        }
 
-        // date.setMonth(4)
-        // date.setYear(2020)
+        const handlePrevMonth = () => {
+            date.setMonth(date.getMonth() - 1)
+        }
+        
+        date.setDate(1)
 
         const months = [
             "January",
@@ -46,12 +49,11 @@ class Main extends React.Component {
         let days_forloop = []
         
         const lastDay = new Date(date.getFullYear(),date.getMonth() + 1,0).getDate();
-        
+        //console.log(date.getMonth())
         const prevlastDay = new Date(date.getFullYear(),date.getMonth(),0).getDate();
 
-        const lastDayIndex = new Date(date.getFullYear(),date.getMonth() + 1,0).getDay();
-        
-        const nextDays = 9
+        //const lastDayIndex = new Date(date.getFullYear(),date.getMonth() + 1,0).getDay();
+         
 
         const firstDayIndex = date.getDay()
         
@@ -60,20 +62,22 @@ class Main extends React.Component {
         }
 
         for(let i = 1; i <= lastDay; i++){
-            days_forloop.push({cn:"", num : i})
+            if(i === new Date().getDate() && date.getMonth() === new Date().getMonth()){
+                days_forloop.push({cn:"today", num : i})
+            }else{
+                days_forloop.push({cn:"", num : i})
+            }
         }
+
+        const nextDays = 42 - days_forloop.length
         
         for(let j = 1; j <= nextDays; j++){
             days_forloop.push({cn:"next-date", num : j})
-            console.log(j)
         }
 
         const days = days_forloop.map((val) => (
             <div className={val.cn}>{val.num}</div>
         ));
-
-        
-
         return (
             <React.Fragment>
                 <main className="home-main-div">
@@ -107,12 +111,23 @@ class Main extends React.Component {
                             <div className="calendar">
 
                                 <div className="month">
-                                    <i className="i fas fa-angle-left prev"></i>
+                                    <i 
+                                        className="i fas fa-angle-left prev"
+                                        onClick={handlePrevMonth}
+                                    >
+
+                                    </i>
+
                                     <div className="date">
                                         <h1> {months[date.getMonth()]} </h1>
                                         <p> {date.toDateString()} </p>
                                     </div>
-                                    <i className="fas fa-angle-right next"></i>
+                                    <i 
+                                        className="fas fa-angle-right next"
+                                        onClick={handleNextMonth}
+                                    >
+
+                                    </i>
                                 </div>
 
                                 <div className="weekdays">
