@@ -1,97 +1,208 @@
 import React from 'react'
 
-const Sign = (props) => {
-    //console.log(props)
+class Sign extends React.Component {
+    constructor(){
+        super()
+        this.state = {
+            window_width : window.innerWidth,
+            // SIGN COMPONENT
+            sign : {
+                header_sign_txt : "Sign In",
+                sign_up : "Sign Up",
+                sign_up_display : (window.innerWidth <= 770) ? "none" : "block",
+                Log_in_btn_txt : "Log In",
+                back_btn_display : "none",
+                back_btn_mobile_display : (window.innerWidth <= 770) ? "block" : "none",
+                login_div_display : (window.innerWidth <= 770) ? "none" : "block",
+                btn_div_mobile_display : (window.innerWidth <= 770) ? "block" : "none",
+                title_div_txt_display : "block"
+            },
+            username : "",
+            password : ""          
+        }
+    }
+
+    handleSignUpClick = () => {
+        if(!this.state.window_width <= 770){
+            var sign = {...this.state.sign}
+            sign.header_sign_txt = "Sign Up"
+            sign.sign_up_display = "none"
+            sign.Log_in_btn_txt = "Sign In"
+            sign.back_btn_display = "block"
+            this.setState({sign})
+        }
+        
+    }
+
+    handleBackBtnClick = () => {
+        var sign = {...this.state.sign}
+        sign.header_sign_txt = "Sign In"
+        sign.sign_up_display = "block"
+        sign.Log_in_btn_txt = "Log In"
+        sign.back_btn_display = "none"
+        this.setState({sign})
+    }
+
+    handleSignInMobileClick = () =>{
+        var sign = {...this.state.sign}
+        sign.title_div_txt_display = "none"
+        sign.login_div_display = "block"
+        sign.btn_div_mobile_display = "none"
+        this.setState({sign})
+    }
+
+    handleSignUpMobileClick = () =>{
+        var sign = {...this.state.sign}
+        sign.title_div_txt_display = "none"
+        sign.login_div_display = "block"
+        sign.btn_div_mobile_display = "none"
+
+        sign.header_sign_txt = "Sign Up"
+        sign.sign_up_display = "none"
+        sign.Log_in_btn_txt = "Sign In"
+        sign.back_btn_display = "block"
+        this.setState({sign})
+    }
+
+    handleBackBtnMobileClick = () =>{
+        var sign = {...this.state.sign}
+        sign.title_div_txt_display = "block"
+        sign.login_div_display = "none"
+        sign.btn_div_mobile_display = "block"
+
+        sign.header_sign_txt = "Sign In"
+        sign.Log_in_btn_txt = "Log In"
+        sign.back_btn_display = "none"
+
+        this.setState({sign})
+    }
+
+    handleSetUserAccount = (event) =>{
+        const {name, value} = event.target
+
+        if(name === "username"){
+            let username = value
+            this.setState({username})
+        }else{
+            let password = value
+            this.setState({password})
+        }
+
+    }
+
+    render() { 
+
+        return(
+            <main className="home-div">
+                <link
+                    rel="stylesheet"
+                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+                    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+                    crossorigin="anonymous"
+                />
+                <img id="home-img" src={require('../imgs/index_bg_2.png')} alt="img" />
     
-    return(
-        <main className="home-div">
-            <link
-                rel="stylesheet"
-                href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-                integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-                crossorigin="anonymous"
-            />
-            <img id="home-img" src={require('../imgs/index_bg_2.png')} alt="img" />
-
-            <label 
-                id="title-div"
-                style={{display : props.args.signState.title_div_txt_display}}
-            >
-                Scheduling & Task Monitoring Website
-            </label>
-
-            <div 
-                className="login-div"
-                style={{display : props.args.signState.login_div_display}}
-            >
-                <div id="login-icon-div"></div>
-
-                <hr id="hr-1"/>
-                <label id="hr-sign-in-lbl"> {props.args.signState.header_sign_txt} </label>
-                <hr id="hr-2"/>
-
-                <form>
-                    <input type="text" name="user_name" id="user-name-input" placeholder="User Name" required />
-                    <input type="password" name="password" id="password-input" placeholder="Password" required />
-                    <button 
-                        type="submit" 
-                        className="btn btn-primary" 
-                        id="login-btn">
-                        {props.args.signState.Log_in_btn_txt}
-                    </button>
-                </form>
-
                 <label 
-                    id="sign-up-lbl"
-                    style={{display: props.args.signState.sign_up_display}}
-                    onClick={props.args.onSignUpClick}
+                    id="title-div"
+                    style={{display : this.state.sign.title_div_txt_display}}
                 >
-                    Sign Up
+                    Scheduling & Task Monitoring Website
                 </label>
+    
+                <div 
+                    className="login-div"
+                    style={{display : this.state.sign.login_div_display}}
+                >
+                    <div id="login-icon-div"></div>
+    
+                    <hr id="hr-1"/>
+                    <label id="hr-sign-in-lbl"> {this.state.sign.header_sign_txt} </label>
+                    <hr id="hr-2"/>
+    
+                    <form autocomplete="off">
+                        <input 
+                            type="text" 
+                            name="username" 
+                            id="user-name-input" 
+                            placeholder="User Name" 
+                            onChange={this.handleSetUserAccount}
+                            required 
+                        />
+                        
+                        <input 
+                            type="password" 
+                            name="password" 
+                            id="password-input" 
+                            placeholder="Password" 
+                            onChange={this.handleSetUserAccount}
+                            required 
+                        />
+                        
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary" 
+                            id="login-btn"
+                            onClick = {() => this.props.args.onLogInClick({
+                                username : this.state.username,
+                                password : this.state.password
+                            })}>
+
+                            {this.state.sign.Log_in_btn_txt}
+                        </button>
+                    </form>
+    
+                    <label 
+                        id="sign-up-lbl"
+                        style={{display: this.state.sign.sign_up_display}}
+                        onClick={this.handleSignUpClick}
+                    >
+                        Sign Up
+                    </label>
+                    
+                    <div 
+                        id="back-btn" 
+                        style={{display: this.state.sign.back_btn_display}}
+                        onClick={this.handleBackBtnClick}
+                    >
+    
+                    </div>
+                    <div 
+                        id="back-btn-mobile"
+                        style={{display : this.state.sign.back_btn_mobile_display}}
+                        onClick={this.handleBackBtnMobileClick}
+                    >
+    
+                    </div>
+                </div>
+    
                 
+    
                 <div 
-                    id="back-btn" 
-                    style={{display: props.args.signState.back_btn_display}}
-                    onClick={props.args.onBackBtnClick}
+                    className="btn-div-mobile"
+                    style={{display : this.state.sign.btn_div_mobile_display}}
                 >
-
+                    <button 
+                        type="button" 
+                        className="btn btn-primary" 
+                        id="sign-in-btn-mobile"
+                        onClick={this.handleSignInMobileClick}
+                    >
+                        Sign In
+                    </button>
+                    <button 
+                        type="button" 
+                        className="btn btn-success" 
+                        id="sign-up-btn-mobile"
+                        onClick={this.handleSignUpMobileClick}
+                    >
+                        Sign Up
+                    </button>
                 </div>
-                <div 
-                    id="back-btn-mobile"
-                    style={{display : props.args.signState.back_btn_mobile_display}}
-                    onClick={props.args.onBackBtnMobileClick}
-                >
-
-                </div>
-            </div>
-
-            
-
-            <div 
-                className="btn-div-mobile"
-                style={{display : props.args.signState.btn_div_mobile_display}}
-            >
-                <button 
-                    type="button" 
-                    className="btn btn-primary" 
-                    id="sign-in-btn-mobile"
-                    onClick={props.args.onSignInMobileClick}
-                >
-                    Sign In
-                </button>
-                <button 
-                    type="button" 
-                    className="btn btn-success" 
-                    id="sign-up-btn-mobile"
-                    onClick={props.args.onSignUpMobileClick}
-                >
-                    Sign Up
-                </button>
-            </div>
-            
-
-        </main>
-    )
+                
+    
+            </main>
+        )
+    }
 }
 
 export default Sign
