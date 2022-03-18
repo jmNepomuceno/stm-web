@@ -14,9 +14,14 @@ class Main extends React.Component {
 
     handlePrevMonth = () =>{
         
-    } // kyla
+    } 
+
+
 
     render() { 
+        
+    console.log("asdf")
+
         let acc_username = this.props.args.users_account[0].username
         const date = new Date()
         
