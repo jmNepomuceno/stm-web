@@ -1,46 +1,68 @@
 import React from 'react'
 
 class Main extends React.Component {
+    
     constructor(){
         super()
         this.state = {
-
+            date : new Date(),
+            days_forloop : []
         }
     }
 
-    handleNextMonth = () =>{
+    renderCalendar = () => {
+
+        this.state.date.setDate(1)
+        let days_forloop = []
+        let key_val = 1
+        const lastDay = new Date(this.state.date.getFullYear(),this.state.date.getMonth() + 1,0).getDate();
+        const prevlastDay = new Date(this.state.date.getFullYear(),this.state.date.getMonth(),0).getDate();
+        const firstDayIndex = this.state.date.getDay()
+
+        for(let x = firstDayIndex; x > 0; x--){
+            days_forloop.push({cn:"prev-date", num : prevlastDay - x + 1, key: key_val++})
+        }
+        
+        for(let i = 1; i <= lastDay; i++){
+            if(i === new Date().getDate() && this.state.date.getMonth() === new Date().getMonth()){
+                days_forloop.push({cn:"today", num : i, key: key_val++})
+            }else{
+                days_forloop.push({cn:"", num : i, key: key_val++})
+            }                
+        }
+
+        //this.setState({days_forloop : days_forloop})
+
+
+        const nextDays = 42 - days_forloop.length
+        
+        for(let j = 1; j <= nextDays; j++){
+            days_forloop.push({cn:"next-date", num : j, key: key_val++})
+        }
+
+        this.setState(prevState => ({
+            days_forloop : days_forloop
+        }))
+
 
     }
 
-    handlePrevMonth = () =>{
-        
-    } 
+    handleNextMonth = () => {
+        this.state.date.setMonth(this.state.date.getMonth() + 1)
+        this.renderCalendar()
+    }
 
+    handlePrevMonth = () => {
+        this.state.date.setMonth(this.state.date.getMonth() - 1)
+        this.renderCalendar()
+    }
 
+    componentDidMount() {
+        this.renderCalendar()
+    }
 
     render() { 
-        
-    console.log("asdf")
-
         let acc_username = this.props.args.users_account[0].username
-        const date = new Date()
-        
-        const handleNextMonth = () => {
-            date.setMonth(date.getMonth() + 1)
-            console.log(date.getMonth())
-            here(date.getMonth())
-        }
-
-        const handlePrevMonth = () => {
-            date.setMonth(date.getMonth() - 1)
-        }
-
-        const here = (val) => {
-            console.log(val)
-        }
-        
-        date.setDate(1)
-
         const months = [
             "January",
             "February",
@@ -52,41 +74,12 @@ class Main extends React.Component {
             "August",
             "September",
             "October",
-            "January",
+            "November",
             "December   "
         ]
-
-        let days_forloop = []
         
-        const lastDay = new Date(date.getFullYear(),date.getMonth() + 1,0).getDate();
-        //console.log(date.getMonth())
-        const prevlastDay = new Date(date.getFullYear(),date.getMonth(),0).getDate();
-
-        //const lastDayIndex = new Date(date.getFullYear(),date.getMonth() + 1,0).getDay();
-         
-
-        const firstDayIndex = date.getDay()
-        
-        for(let x = firstDayIndex; x > 0; x--){
-            days_forloop.push({cn:"prev-date", num : prevlastDay - x + 1})
-        }
-
-        for(let i = 1; i <= lastDay; i++){
-            if(i === new Date().getDate() && date.getMonth() === new Date().getMonth()){
-                days_forloop.push({cn:"today", num : i})
-            }else{
-                days_forloop.push({cn:"", num : i})
-            }
-        }
-
-        const nextDays = 42 - days_forloop.length
-        
-        for(let j = 1; j <= nextDays; j++){
-            days_forloop.push({cn:"next-date", num : j})
-        }
-
-        const days = days_forloop.map((val) => (
-            <div className={val.cn}>{val.num}</div>
+        const days = this.state.days_forloop.map((val) => (
+            <div className={val.cn} key={val.key}>{val.num}</div>
         ));
         return (
             <React.Fragment>
@@ -123,18 +116,18 @@ class Main extends React.Component {
                                 <div className="month">
                                     <i 
                                         className="i fas fa-angle-left prev"
-                                        onClick={handlePrevMonth}
+                                        onClick={this.handlePrevMonth}
                                     >
 
                                     </i>
 
                                     <div className="date">
-                                        <h1> {months[date.getMonth()]} </h1>
-                                        <p> {date.toDateString()} </p>
+                                        <h1> {months[this.state.date.getMonth()]} </h1>
+                                        <p> {this.state.date.toDateString()} </p>
                                     </div>
                                     <i 
                                         className="fas fa-angle-right next"
-                                        onClick={handleNextMonth}
+                                        onClick={this.handleNextMonth}
                                     >
 
                                     </i>
