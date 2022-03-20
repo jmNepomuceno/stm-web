@@ -13,8 +13,11 @@ class Main extends React.Component {
                 nav_bar_left : "2%",
                 side_header_display : (window.innerWidth <= 770) ? "none" : "flex",
                 aside_div_display : (window.innerWidth <= 770) ? "none" : "block",
-                home_div_opacity : "1"
-            }
+                home_div_opacity : "1",
+                choose_day_display : "block",
+                no_tasks_display : "none"
+            },
+            tasks_per_date : [],
         }
     }
 
@@ -96,6 +99,20 @@ class Main extends React.Component {
         this.setState({styles})
     }
 
+    handleNoTasksClick = () => {
+
+    }
+
+    handleDateClick = (num, cn) => {
+        var styles = {...this.state.styles}
+
+        styles.choose_day_display = "none"
+        // if no tasks on that date.
+        styles.no_tasks_display = "block"
+
+        this.setState({styles})
+    }
+
 
     render() { 
         let acc_username = this.props.args.users_account[0].username
@@ -115,7 +132,12 @@ class Main extends React.Component {
         ]
         
         const days = this.state.days_forloop.map((val) => (
-            <div className={val.cn} key={val.key}>{val.num}</div>
+            <div 
+                className={val.cn} 
+                key={val.key}
+                onClick={() => this.handleDateClick(val.num , val.cn)}
+            >{val.num}
+            </div>
         ));
 
         const nav_styles = {
@@ -150,10 +172,17 @@ class Main extends React.Component {
                         className="aside-div"
                         style={{display : this.state.styles.aside_div_display}}
                     >
-                        <div className="no-tasks-div">
-                            <label>No Tasks for this day yet</label>
+
+                        <label style={{display : this.state.styles.choose_day_display}}>Choose a date</label>
+
+                        <div 
+                            className="no-tasks-div"
+                            style={{display : this.state.styles.no_tasks_display}}
+                        >
+                            <label>No Information for this day yet</label>
                             <img src={require('../imgs/main_imgs/add_lists.png')} alt="img" />
                         </div>
+
                     </aside>
 
                     <div 
