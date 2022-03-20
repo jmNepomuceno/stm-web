@@ -15,7 +15,9 @@ class Main extends React.Component {
                 aside_div_display : (window.innerWidth <= 770) ? "none" : "block",
                 home_div_opacity : "1",
                 choose_day_display : "block",
-                no_tasks_display : "none"
+                main_aside_display : "none",
+                no_tasks_display : "none",
+                days_div_border : "none"
             },
             tasks_per_date : [],
         }
@@ -100,13 +102,18 @@ class Main extends React.Component {
     }
 
     handleNoTasksClick = () => {
+        var styles = {...this.state.styles}
+        styles.no_tasks_display = "none"
+        styles.main_aside_display = "block"
 
+        this.setState({styles})
     }
 
     handleDateClick = (num, cn) => {
         var styles = {...this.state.styles}
 
         styles.choose_day_display = "none"
+        styles.days_div_border = "1px solid #275EA3"
         // if no tasks on that date.
         styles.no_tasks_display = "block"
 
@@ -180,8 +187,21 @@ class Main extends React.Component {
                             style={{display : this.state.styles.no_tasks_display}}
                         >
                             <label>No Information for this day yet</label>
-                            <img src={require('../imgs/main_imgs/add_lists.png')} alt="img" />
+                            <img 
+                                src={require('../imgs/main_imgs/add_lists.png')} 
+                                alt="img" 
+                                onClick={this.handleNoTasksClick}
+                            />
                         </div>
+                        
+                        <div 
+                            className="main-aside"
+                            style={{display : this.state.styles.main_aside_display}}
+                        >
+
+                        </div>
+
+                        
 
                     </aside>
 
