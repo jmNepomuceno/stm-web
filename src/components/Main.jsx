@@ -6,8 +6,20 @@ class Main extends React.Component {
         super()
         this.state = {
             date : new Date(),
-            days_forloop : []
+            days_forloop : [],
+            styles : {
+                log_out_display : "block",
+                nav_bar_display : (window.innerWidth <= 770) ? "block" : "none",
+                nav_bar_left : "2%",
+                side_header_display : (window.innerWidth <= 770) ? "none" : "flex",
+                aside_div_display : (window.innerWidth <= 770) ? "none" : "block",
+                home_div_opacity : "1"
+            }
         }
+    }
+
+    componentDidMount() {
+        this.renderCalendar()
     }
 
     renderCalendar = () => {
@@ -57,8 +69,31 @@ class Main extends React.Component {
         this.renderCalendar()
     }
 
-    componentDidMount() {
-        this.renderCalendar()
+    handleNavBarClick = () => {
+        var styles = {...this.state.styles}
+
+        if(this.state.styles.nav_bar_left === "2%"){
+            styles.log_out_display = "none"
+            styles.nav_bar_left = "86%"
+
+            styles.home_div_opacity = "0.2"
+
+            styles.side_header_display = "flex"
+            styles.aside_div_display = "block"
+
+        }else{
+            styles.log_out_display = "block"
+            styles.nav_bar_left = "2%"
+
+            styles.home_div_opacity = "1"
+
+            styles.side_header_display = "none"
+            styles.aside_div_display = "none"
+
+        }
+
+        
+        this.setState({styles})
     }
 
 
@@ -83,31 +118,48 @@ class Main extends React.Component {
             <div className={val.cn} key={val.key}>{val.num}</div>
         ));
 
-        // const handleLogOutClick = () => {
-        //     const navigate = useNavigate();
-        //     if (window.confirm('Are you sure you want to Log out?')) {
-        //         navigate('/home');
-        //     } 
-        // }
+        const nav_styles = {
+            display : this.state.styles.nav_bar_display,
+            left: this.state.styles.nav_bar_left
+        }
+
         return (
             <React.Fragment>
                 <main className="home-main-div">
 
                     <header className="home-header">
                         <Link to={'/home'}>
-                            <label>Log out</label>
+                            <label style={{display : this.state.styles.log_out_display}}>Log out</label>
                         </Link>
+                        <img 
+                            src={require('../imgs/main_imgs/nav_bar.png')} 
+                            alt="img" 
+                            style={nav_styles}
+                            onClick={this.handleNavBarClick}
+                        />
                     </header>
 
-                    <aside className="side-header">
+                    <aside 
+                        className="side-header"
+                        style={{display: this.state.styles.side_header_display}}
+                    >
                         <label> Hi, {acc_username}! </label>
                     </aside>
 
-                    <aside className="aside-div">
-
+                    <aside 
+                        className="aside-div"
+                        style={{display : this.state.styles.aside_div_display}}
+                    >
+                        <div className="no-tasks-div">
+                            <label>No Tasks for this day yet</label>
+                            <img src={require('../imgs/main_imgs/add_lists.png')} alt="img" />
+                        </div>
                     </aside>
 
-                    <div className="home-div-body">
+                    <div 
+                        className="home-div-body"
+                        style={{opacity : this.state.styles.home_div_opacity}}
+                    >
                         {/* <div className="month-div">
 
                             <div className="arrow-left"></div>
