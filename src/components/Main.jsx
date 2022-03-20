@@ -1,5 +1,5 @@
 import React from 'react'
-
+import  {Link} from 'react-router-dom'
 class Main extends React.Component {
     
     constructor(){
@@ -61,6 +61,7 @@ class Main extends React.Component {
         this.renderCalendar()
     }
 
+
     render() { 
         let acc_username = this.props.args.users_account[0].username
         const months = [
@@ -81,12 +82,21 @@ class Main extends React.Component {
         const days = this.state.days_forloop.map((val) => (
             <div className={val.cn} key={val.key}>{val.num}</div>
         ));
+
+        // const handleLogOutClick = () => {
+        //     const navigate = useNavigate();
+        //     if (window.confirm('Are you sure you want to Log out?')) {
+        //         navigate('/home');
+        //     } 
+        // }
         return (
             <React.Fragment>
                 <main className="home-main-div">
 
                     <header className="home-header">
-                        <label>Log out</label>
+                        <Link to={'/home'}>
+                            <label>Log out</label>
+                        </Link>
                     </header>
 
                     <aside className="side-header">
