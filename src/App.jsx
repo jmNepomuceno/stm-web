@@ -15,12 +15,24 @@ class App extends React.Component {
                     username : "Kyla"
                 }
             ],   
+            users_goals : [
+                {
+                    year : [],
+                    month : [],
+                    day : [],
+                    time : []
+                }
+            ]
         }
     }
 
     handleLogInClick = (obj) => {
         this.setState({ users_accounts: [...this.state.users_accounts, obj ] })
         this.setState({users_accounts_counter : this.state.users_accounts_counter + 1})
+    }
+
+    handleGoalConfirmClick = (obj) => {
+        console.log(obj)
     }
 
     render() { 
@@ -46,7 +58,9 @@ class App extends React.Component {
                                 args = {
                                     {
                                         userAcc_counter : this.state.users_accounts_counter,
-                                        users_account : this.state.users_accounts
+                                        users_account : this.state.users_accounts,
+                                        user_goals : this.state.users_goals,
+                                        onGoalConfirmClick : this.handleGoalConfirmClick
                                     }
                                 }
                             />

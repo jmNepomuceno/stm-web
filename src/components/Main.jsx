@@ -14,10 +14,10 @@ class Main extends React.Component {
                 side_header_display : (window.innerWidth <= 770) ? "none" : "flex",
                 aside_div_display : (window.innerWidth <= 770) ? "none" : "block",
                 home_div_opacity : "1",
-                choose_day_display : "none", //block
+                choose_day_display : "block", //block
                 no_tasks_display : "none",
                 days_div_border : "none",
-                main_aside_display : "block", // none
+                main_aside_display : "none", // none
                 icons_div_top : "40%", //40%
                 goal_icon_background : "#eee",
                 reminder_icon_background : "#eee",
@@ -31,7 +31,15 @@ class Main extends React.Component {
                 goal_confirm_display : "none",
                 goal_confirm_text : ""
             },
-            tasks_per_date : [],
+            day_clicked : 0,
+            goals : {
+                year : "",
+                month : "",
+                day : "",
+                time : "",
+                often : "",
+                title : ""
+            }
         }
     }
 
@@ -128,8 +136,9 @@ class Main extends React.Component {
         styles.days_div_border = "1px solid #275EA3"
         // if no tasks on that date.
         styles.no_tasks_display = "block"
-
+        
         this.setState({styles})
+        this.setState({day_clicked : num})
     }
 
     handleIconClick = (icon) => {
@@ -203,7 +212,28 @@ class Main extends React.Component {
         styles.goal_confirm_display = "block"
         styles.goal_confirm_text = what
         this.setState({styles})
-    
+    }
+
+    handleGoalOnChange = (event) =>{
+        const {name, value} = event.target
+
+        var goals = {...this.state.goals}
+
+        if(name === "goal-title"){
+            goals.title = value
+        }
+        else if(name === "often"){
+            goals.often = value
+        }
+        else if(name === "time"){
+            goals.time = value
+        }
+
+        goals.year = this.state.date.getFullYear()
+        goals.month = this.state.date.getMonth()
+        goals.day = this.state.day_clicked
+
+        this.setState({goals})
     }
 
 
@@ -237,9 +267,15 @@ class Main extends React.Component {
             display : this.state.styles.nav_bar_display,
             left: this.state.styles.nav_bar_left
         }
-
+        // console.log(this.state.goals)
         return (
             <React.Fragment>
+                <link
+                    rel="stylesheet"
+                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+                    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+                    crossorigin="anonymous"
+                />
                 <main className="home-main-div">
 
                     <header className="home-header">
@@ -276,7 +312,7 @@ class Main extends React.Component {
                             className="no-tasks-div"
                             style={{display : this.state.styles.no_tasks_display}}
                         >
-                            <label>No Information for this day yet</label>
+                            <label>No Information for {months[this.state.date.getMonth()]} {this.state.day_clicked } yet</label>
                             <img 
                                 src={require('../imgs/main_imgs/add_lists.png')} 
                                 alt="img" 
@@ -329,7 +365,7 @@ class Main extends React.Component {
                                 <label className="label task-lbl">Task</label>
                                 <label className="label event-lbl">Event</label>
                             </div>
-
+                            {/* di dapat ma click yung mga prev date saka next date */}
                             {/* GOAL DIVISION */}
                             <div 
                                 className="goal-div"
@@ -388,12 +424,17 @@ class Main extends React.Component {
                                 >
                                     <div className="which-exercise">
                                         <label>Which {this.state.styles.goal_confirm_text}?</label>
-                                        <input type="text" />
+                                        <input 
+                                            type="text" 
+                                            name="goal-title"
+                                            onChange={this.handleGoalOnChange} 
+                                        />
                                     </div>
 
                                     <div className="how-often">
                                         <label>How often?</label>
-                                        <select name="time">
+                                        <select name="often" onChange={this.handleGoalOnChange} >
+                                            <option value="" disabled selected>Choose</option>
                                             <option value="Once a week">Once a week</option>
                                             <option value="3 times a week">3 times a week</option>
                                             <option value="5 times a week">5 times a week</option>
@@ -403,7 +444,8 @@ class Main extends React.Component {
 
                                     <div className="for-how-long">
                                         <label>For how long?</label>
-                                        <select name="time">
+                                        <select name="time" onChange={this.handleGoalOnChange}>
+                                            <option value="" disabled selected>Choose</option>
                                             <option value="15 minutes">15 minutes</option>
                                             <option value="30 minutes">30 minutes</option>
                                             <option value="1 hour">1 hour</option>
@@ -416,7 +458,11 @@ class Main extends React.Component {
                                         <label className="goal-info">
                                             Calendar will schedule:
                                         </label>
-                                        <button>Confirm</button>
+                                        <button 
+                                            className="btn btn-success"
+                                            onClick={() => this.props.args.onGoalConfirmClick(this.state.goals)}
+                                        >
+                                            Add</button>
                                     </div>
                                 </div>
 

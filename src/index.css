@@ -462,6 +462,7 @@ input[type=password]{
     position:absolute;
     top:35%;
     right:2%;
+    cursor:pointer;
 }
 
 /* REMINDER DIV */
