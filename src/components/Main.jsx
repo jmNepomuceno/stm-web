@@ -131,14 +131,17 @@ class Main extends React.Component {
 
     handleDateClick = (num, cn) => {
         var styles = {...this.state.styles}
+        if(cn !== 'prev-date' && cn !== 'next-date'){
+            styles.choose_day_display = "none"
+            styles.days_div_border = "1px solid #275EA3"
+            // if no tasks on that date.
+            styles.no_tasks_display = "block"
+            
+            this.setState({styles})
+            this.setState({day_clicked : num})
+        }
 
-        styles.choose_day_display = "none"
-        styles.days_div_border = "1px solid #275EA3"
-        // if no tasks on that date.
-        styles.no_tasks_display = "block"
         
-        this.setState({styles})
-        this.setState({day_clicked : num})
     }
 
     handleIconClick = (icon) => {
@@ -254,14 +257,31 @@ class Main extends React.Component {
             "December   "
         ]
         
-        const days = this.state.days_forloop.map((val) => (
-            <div 
-                className={val.cn} 
-                key={val.key}
-                onClick={() => this.handleDateClick(val.num , val.cn)}
-            >{val.num}
-            </div>
-        ));
+
+        const days = this.state.days_forloop.map((val) => {
+            let every_day = (this.props.args.user_goals.often[0] === "Every day" 
+                            // && val.num >= this.props.args.user_goals.day[0] 
+                            && val.cn !== "prev-date" && val.cn !== "next-date") 
+                            ? "block" : "none"
+            // let once_week = (this.props.args.user_goals.often[0] === "Once a week" 
+            //                 // && val.num === this.props.args.user_goals.day[0] 
+            //                 && val.cn !== "prev-date" && val.cn !== "next-date")
+            return(
+                <div 
+                    className={val.cn} 
+                    key={val.key}
+                    onClick={() => this.handleDateClick(val.num , val.cn)}
+                    
+                >{val.num}
+                    <img 
+                        src={require('../imgs/main_imgs/asterisk.png')} 
+                        alt="img"
+                        // style={{display : every_day}}
+                        style={{display : "none"}}
+                    />
+                </div>
+            )
+        });
 
         const nav_styles = {
             display : this.state.styles.nav_bar_display,
@@ -365,7 +385,7 @@ class Main extends React.Component {
                                 <label className="label task-lbl">Task</label>
                                 <label className="label event-lbl">Event</label>
                             </div>
-                            {/* di dapat ma click yung mga prev date saka next date */}
+                            
                             {/* GOAL DIVISION */}
                             <div 
                                 className="goal-div"
@@ -454,9 +474,11 @@ class Main extends React.Component {
                                     </div>
 
                                     <div className="confirm-goal">
-                                        <label className="goal-title">Title</label>
+                                        <label className="goal-title">{this.state.goals.title}</label>
                                         <label className="goal-info">
-                                            Calendar will schedule:
+                                            Calendar will schedule: <br/>
+                                            {this.state.goals.often} <br/>
+                                            {this.state.goals.time}
                                         </label>
                                         <button 
                                             className="btn btn-success"

@@ -15,14 +15,14 @@ class App extends React.Component {
                     username : "Kyla"
                 }
             ],   
-            users_goals : [
-                {
-                    year : [],
-                    month : [],
-                    day : [],
-                    time : []
-                }
-            ]
+            users_goals : {
+                year : [],
+                month : [],
+                day : [],
+                time : [],
+                often : [],
+                title : []
+            }
         }
     }
 
@@ -32,11 +32,18 @@ class App extends React.Component {
     }
 
     handleGoalConfirmClick = (obj) => {
-        console.log(obj)
+        var users_goals = {...this.state.users_goals}
+        users_goals.year.push(obj.year)
+        users_goals.month.push(obj.month)
+        users_goals.day.push(obj.day)
+        users_goals.time.push(obj.time)
+        users_goals.often.push(obj.often)
+        users_goals.title.push(obj.title)
+        this.setState({users_goals})
     }
 
     render() { 
-        // console.log(this.state)
+        console.log(this.state.users_goals)
         return (
             <Router basename='stm-web'>
                 <React.Fragment>
