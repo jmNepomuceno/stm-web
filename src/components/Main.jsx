@@ -14,16 +14,17 @@ class Main extends React.Component {
                 side_header_display : (window.innerWidth <= 770) ? "none" : "flex",
                 aside_div_display : (window.innerWidth <= 770) ? "none" : "block",
                 home_div_opacity : "1",
-                choose_day_display : "block", //block
+                choose_day_display : "none", //block
                 no_tasks_display : "none",
                 days_div_border : "none",
-                main_aside_display : "none", // none
+                main_aside_display : "block", // none
                 icons_div_top : "40%", //40%
                 goal_icon_background : "#eee",
                 reminder_icon_background : "#eee",
                 task_icon_background : "#eee",
                 event_icon_background : "#eee",
                 goal_div_display : "none",
+                reminder_div_display : "none",
             },
             tasks_per_date : [],
         }
@@ -133,14 +134,16 @@ class Main extends React.Component {
 
         if(icon === "goal"){
             styles.goal_icon_background = "#9ECEE6"
+            styles.goal_div_display = "block"
         }else if(icon === "reminder"){
             styles.reminder_icon_background = "#9ECEE6"
+            styles.reminder_div_display = "block"
         }else if(icon === "task"){
             styles.task_icon_background = "#9ECEE6"
         }else if(icon === "event"){
             styles.event_icon_background = "#9ECEE6"
         }
-        styles.goal_div_display = "block"
+       
         
         this.setState({styles})
     }
@@ -305,6 +308,53 @@ class Main extends React.Component {
                                 </div>
                                 
                             </div>
+
+                            {/* REMINDER DIVISION */}
+                            <div 
+                                className="reminder-div"
+                                style={{display : this.state.styles.reminder_div_display}}
+                            >
+
+                                <input type="text" className="remind-me-txt" placeholder="Remind me to..."/>
+                                
+                                <select name="time" className="time-select">
+                                    <option value="" disabled selected>On what time...</option>
+                                    <option value="1:00">1:00</option>
+                                    <option value="2:00">2:00</option>
+                                    <option value="3:00">3:00</option>
+                                    <option value="4:00">4:00</option>
+                                    <option value="5:00">5:00</option>
+                                    <option value="6:00">6:00</option>
+                                    <option value="7:00">7:00</option>
+                                    <option value="8:00">8:00</option>
+                                    <option value="9:00">9:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
+                                    <option value="24:00">24:00</option>
+                                    
+                                </select>
+
+                                <select name="time" className="repeat-select">
+                                    <option value="" disabled selected>Repeat every...</option>
+                                    <option value="Every day">Every day</option>
+                                    <option value="Every week">Every week</option>
+                                    <option value="Every month">Every month</option>
+                                    <option value="Every year">Every year</option>
+                                </select>
+                            </div>
+
                         </div>
 
                         

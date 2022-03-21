@@ -305,7 +305,8 @@ input[type=password]{
     background: transparent; 
 }
 
-.home-main-div .aside-div .main-aside .goal-div{
+.home-main-div .aside-div .main-aside .goal-div,
+.home-main-div .aside-div .main-aside .reminder-div{
     position:absolute;
     top:13%;
     width: 100%;
@@ -314,20 +315,20 @@ input[type=password]{
     overflow-y: scroll; 
 }
 
-.home-main-div .aside-div .main-aside .goal-div .goal-exercise,
-.home-main-div .aside-div .main-aside .goal-div .goal-skill,
-.home-main-div .aside-div .main-aside .goal-div .goal-fam-friends,
-.home-main-div .aside-div .main-aside .goal-div .goal-me-time,
-.home-main-div .aside-div .main-aside .goal-div .goal-organize{
+.home-main-div .aside-div .main-aside .goal-div .goal{
     position:absolute;
     left:1.5%;
     width:97%;
     height:25%;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-exercise{
+    top:0;
     background: url(./imgs/main_imgs/goal_exercise.jpg);
     background-size: 100% 100%;
     background-position: center;
-    border-radius: 5px;
-    cursor: pointer;
 }
 
 .home-main-div .aside-div .main-aside .goal-div .goal-skill{
@@ -374,6 +375,59 @@ input[type=password]{
 
 .home-main-div .aside-div .main-aside .goal-div .goal .label span{
     font-size: 0.6rem;
+}
+
+/* REMINDER DIV */
+.home-main-div .aside-div .main-aside .reminder-div .remind-me-txt{
+    position:absolute;
+    top:5%;
+    left:5%;
+    width:90%;
+    height:10%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color:#eee;
+    font-weight: 100;
+}
+
+.home-main-div .aside-div .main-aside .reminder-div .remind-me-txt:focus{
+    outline:none;
+}
+
+.home-main-div .aside-div .main-aside .reminder-div .time-select,
+.home-main-div .aside-div .main-aside .reminder-div .repeat-select{
+    position:absolute;
+    top:20%;
+    left:5%;
+    width:90%;
+    height:10%;
+    text-align:center;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color:#eee;
+    font-weight: 100;
+}
+
+.home-main-div .aside-div .main-aside .reminder-div .repeat-select{
+    top:35%;
+}
+
+.home-main-div .aside-div .main-aside .reminder-div .time-select option,
+.home-main-div .aside-div .main-aside .reminder-div .repeat-select option{
+    color:black;
+}
+
+.home-main-div .aside-div .main-aside .reminder-div .time-select:focus,
+.home-main-div .aside-div .main-aside .reminder-div .repeat-select:focus{
+    outline:none;
 }
 
 .home-main-div .aside-div .no-tasks-div{
