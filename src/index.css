@@ -377,6 +377,93 @@ input[type=password]{
     font-size: 0.6rem;
 }
 
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div{
+    position:absolute;
+    width:100%;
+    height:95%;
+    /* background:pink; */
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .which-exercise,
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .how-often,
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .for-how-long,
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .confirm-goal{
+    position:absolute;
+    top:0;
+    left:2.5%;
+    width:95%;
+    height:20%;
+    border:none;
+    border-bottom:1px solid black;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .which-exercise label,
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .how-often label,
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .for-how-long label,
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .confirm-goal .goal-title{
+    position:absolute;
+    top:20%;
+    left:2%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color:#eee;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .which-exercise input{
+    position:absolute;
+    top:50%;
+    left:2%;
+    width:55%;
+    height:35%;
+    background:transparent;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color:#eee;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .which-exercise input:focus{
+    outline:none;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .how-often{
+    top:20%;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .how-often select,
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .for-how-long select{
+    position:absolute;
+    top:50%;
+    left:2%;
+    width:55%;
+    height:35%;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .for-how-long{
+    top:40%;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .confirm-goal{
+    top:60%;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .confirm-goal .goal-info{
+    position:absolute;
+    top:45%;
+    left:2%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color:#eee;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .confirm-goal button{
+    position:absolute;
+    top:35%;
+    right:2%;
+}
+
 /* REMINDER DIV */
 .home-main-div .aside-div .main-aside .reminder-div .remind-me-txt{
     position:absolute;
@@ -427,6 +514,65 @@ input[type=password]{
 
 .home-main-div .aside-div .main-aside .reminder-div .time-select:focus,
 .home-main-div .aside-div .main-aside .reminder-div .repeat-select:focus{
+    outline:none;
+}
+
+/* TASK DIV */
+.home-main-div .aside-div .main-aside .task-div .add-title-txt,
+.home-main-div .aside-div .main-aside .task-div .add-details-txt{
+    position:absolute;
+    top:15%;
+    left:5%;
+    width:90%;
+    height:10%;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color:#eee;
+    font-weight: 100;
+}
+
+.home-main-div .aside-div .main-aside .task-div .add-details-txt{
+    top:25%;
+}
+
+.home-main-div .aside-div .main-aside .task-div .add-title-txt:focus,
+.home-main-div .aside-div .main-aside .task-div .add-details-txt:focus{
+    outline:none;
+}
+
+.home-main-div .aside-div .main-aside .task-div .time-select,
+.home-main-div .aside-div .main-aside .task-div .repeat-select{
+    position:absolute;
+    top:35%;
+    left:5%;
+    width:90%;
+    height:10%;
+    text-align:center;
+    background:transparent;
+    border:none;
+    border-bottom:1px solid black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color:#eee;
+    font-weight: 100;
+}
+
+.home-main-div .aside-div .main-aside .task-div .repeat-select{
+    top: 45%;
+}
+
+.home-main-div .aside-div .main-aside .task-div .time-select option,
+.home-main-div .aside-div .main-aside .task-div .repeat-select option{
+    color:black;
+}
+
+.home-main-div .aside-div .main-aside .task-div .time-select:focus,
+.home-main-div .aside-div .main-aside .task-div .repeat-select:focus{
     outline:none;
 }
 

@@ -23,8 +23,13 @@ class Main extends React.Component {
                 reminder_icon_background : "#eee",
                 task_icon_background : "#eee",
                 event_icon_background : "#eee",
+                goal_div_container_display : "none",
                 goal_div_display : "none",
                 reminder_div_display : "none",
+                task_div_display : "none",
+                event_div_display : "none",
+                goal_confirm_display : "none",
+                goal_confirm_text : ""
             },
             tasks_per_date : [],
         }
@@ -135,17 +140,70 @@ class Main extends React.Component {
         if(icon === "goal"){
             styles.goal_icon_background = "#9ECEE6"
             styles.goal_div_display = "block"
-        }else if(icon === "reminder"){
+            styles.goal_div_container_display = "block"
+
+            styles.reminder_div_display = "none"
+            styles.task_div_display = "none"
+            styles.event_div_display = "none"
+
+            styles.reminder_icon_background = "white"
+            styles.task_icon_background = "white"
+            styles.event_icon_background = "white"
+        }
+        else if(icon === "reminder"){
             styles.reminder_icon_background = "#9ECEE6"
             styles.reminder_div_display = "block"
-        }else if(icon === "task"){
+
+            styles.goal_confirm_display = "none"
+
+            styles.goal_div_display = "none"
+            styles.task_div_display = "none"
+            styles.event_div_display = "none"
+
+            styles.goal_icon_background = "white"
+            styles.task_icon_background = "white"
+            styles.event_icon_background = "white"
+        }
+        else if(icon === "task"){
             styles.task_icon_background = "#9ECEE6"
-        }else if(icon === "event"){
+            styles.task_div_display = "block"
+
+            styles.goal_confirm_display = "none"
+
+            styles.goal_div_display = "none"
+            styles.reminder_div_display = "none"
+            styles.event_div_display = "none"
+
+            styles.goal_icon_background = "white"
+            styles.reminder_icon_background = "white"
+            styles.event_icon_background = "white"
+        }
+        else if(icon === "event"){
             styles.event_icon_background = "#9ECEE6"
+
+            styles.goal_confirm_display = "none"
+
+            styles.goal_div_display = "none"
+            styles.task_div_display = "none"
+            styles.reminder_div_display = "none"
+
+            styles.goal_icon_background = "white"
+            styles.reminder_icon_background = "white"
+            styles.task_icon_background = "white"
         }
        
         
         this.setState({styles})
+    }
+
+    handleGoalConfirmClick = (what) => {
+        var styles = {...this.state.styles}
+
+        styles.goal_div_container_display = "none"
+        styles.goal_confirm_display = "block"
+        styles.goal_confirm_text = what
+        this.setState({styles})
+    
     }
 
 
@@ -277,36 +335,91 @@ class Main extends React.Component {
                                 className="goal-div"
                                 style={{display : this.state.styles.goal_div_display}}
                             >
-                                <div className="goal goal-exercise">
-                                    <label className="label goal-exericse-lbl">
-                                        Exercise <br /> <span>Run, do yoga, get your body moving</span>
-                                    </label>
-                                </div>
+                                <div style={{display : this.state.styles.goal_div_container_display}}>
+                                    <div 
+                                        className="goal goal-exercise"
+                                        onClick={() => this.handleGoalConfirmClick("Exercise")}
+                                    >
+                                        <label className="label goal-exericse-lbl">
+                                            Exercise <br /> <span>Run, do yoga, get your body moving</span>
+                                        </label>
+                                    </div>
 
-                                <div className="goal goal-skill">
-                                    <label className="label goal-skill-lbl">
-                                        Build a skill <br /> <span>Learn a language, practice an instrument</span>
-                                    </label>
-                                </div>
+                                    <div 
+                                        className="goal goal-skill"
+                                        onClick={() => this.handleGoalConfirmClick("skill")}
+                                    >
+                                        <label className="label goal-skill-lbl">
+                                            Build a skill <br /> <span>Learn a language, practice an instrument</span>
+                                        </label>
+                                    </div>
 
-                                <div className="goal goal-fam-friends">
-                                    <label className="label goal-fam-friends-lbl">
-                                        Family & friends <br /> <span>Make time for those who matter most</span>
-                                    </label>
-                                </div>
+                                    <div 
+                                        className="goal goal-fam-friends"
+                                        onClick={() => this.handleGoalConfirmClick("Family / Friends")}
+                                    >
+                                        <label className="label goal-fam-friends-lbl">
+                                            Family & friends <br /> <span>Make time for those who matter most</span>
+                                        </label>
+                                    </div>
 
-                                <div className="goal goal-me-time">
-                                    <label className="label goal-me-time-lbl">
-                                        Me time <br /> <span>Read, meditate, take care of yourself</span>
-                                    </label>
-                                </div>
+                                    <div 
+                                        className="goal goal-me-time"
+                                        onClick={() => this.handleGoalConfirmClick("Activity")}
+                                    >
+                                        <label className="label goal-me-time-lbl">
+                                            Me time <br /> <span>Read, meditate, take care of yourself</span>
+                                        </label>
+                                    </div>
 
-                                <div className="goal goal-organize">
-                                    <label className="label goal-organize-lbl">
-                                        Organize my life <br /> <span>Stay on top of things</span>
-                                    </label>
+                                    <div 
+                                        className="goal goal-organize"
+                                        onClick={() => this.handleGoalConfirmClick("need to organize")}
+                                    >
+                                        <label className="label goal-organize-lbl">
+                                            Organize my life <br /> <span>Stay on top of things</span>
+                                        </label>
+                                    </div>
                                 </div>
                                 
+                                <div 
+                                    className="goal-confirm-div"
+                                    style={{display : this.state.styles.goal_confirm_display}}
+                                >
+                                    <div className="which-exercise">
+                                        <label>Which {this.state.styles.goal_confirm_text}?</label>
+                                        <input type="text" />
+                                    </div>
+
+                                    <div className="how-often">
+                                        <label>How often?</label>
+                                        <select name="time">
+                                            <option value="Once a week">Once a week</option>
+                                            <option value="3 times a week">3 times a week</option>
+                                            <option value="5 times a week">5 times a week</option>
+                                            <option value="Every day">Every day</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="for-how-long">
+                                        <label>For how long?</label>
+                                        <select name="time">
+                                            <option value="15 minutes">15 minutes</option>
+                                            <option value="30 minutes">30 minutes</option>
+                                            <option value="1 hour">1 hour</option>
+                                            <option value="2 hours">2 hours</option>
+                                        </select>
+                                    </div>
+
+                                    <div className="confirm-goal">
+                                        <label className="goal-title">Title</label>
+                                        <label className="goal-info">
+                                            Calendar will schedule:
+                                        </label>
+                                        <button>Confirm</button>
+                                    </div>
+                                </div>
+
                             </div>
 
                             {/* REMINDER DIVISION */}
@@ -316,6 +429,53 @@ class Main extends React.Component {
                             >
 
                                 <input type="text" className="remind-me-txt" placeholder="Remind me to..."/>
+                                
+                                <select name="time" className="time-select">
+                                    <option value="" disabled selected>On what time...</option>
+                                    <option value="1:00">1:00</option>
+                                    <option value="2:00">2:00</option>
+                                    <option value="3:00">3:00</option>
+                                    <option value="4:00">4:00</option>
+                                    <option value="5:00">5:00</option>
+                                    <option value="6:00">6:00</option>
+                                    <option value="7:00">7:00</option>
+                                    <option value="8:00">8:00</option>
+                                    <option value="9:00">9:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="12:00">12:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                    <option value="18:00">18:00</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
+                                    <option value="24:00">24:00</option>
+                                    
+                                </select>
+
+                                <select name="time" className="repeat-select">
+                                    <option value="" disabled selected>Repeat every...</option>
+                                    <option value="Every day">Every day</option>
+                                    <option value="Every week">Every week</option>
+                                    <option value="Every month">Every month</option>
+                                    <option value="Every year">Every year</option>
+                                </select>
+                            </div>
+
+                            {/* TASK DIVISION */}
+                            <div 
+                                className="task-div"
+                                style={{display : this.state.styles.task_div_display}}
+                            >
+
+                                <input type="text" className="add-title-txt" placeholder="Add title"/>
+                                <input type="text" className="add-details-txt" placeholder="Add details"/>
                                 
                                 <select name="time" className="time-select">
                                     <option value="" disabled selected>On what time...</option>
