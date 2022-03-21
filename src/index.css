@@ -212,7 +212,7 @@ input[type=password]{
     z-index: 1;
 }
 
-.home-main-div .aside-div label{
+.home-main-div .aside-div .choose-date-lbl{
     position:absolute;
     top:45%;
     left:15%;
@@ -227,7 +227,153 @@ input[type=password]{
 .home-main-div .aside-div .main-aside{
     width:100%;
     height:100%;
-    background: black;
+    background: #2a2b2dff;
+}
+
+.home-main-div .aside-div .main-aside .icons-div{
+    position:relative;
+    top:40%;
+    width:100%;
+    height:12%;
+    transition:0.5s;
+    /* border:1px solid white; */
+}
+
+.home-main-div .aside-div .main-aside .icons-div .icon{
+    position:absolute;
+    top:10%;
+    width:15%;
+    height:60%;
+    border-radius: 50%;
+    background:#eee;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.8;
+    cursor:pointer;
+    transition: 0.5s;
+}
+
+.home-main-div .aside-div .main-aside .icons-div .icon img{
+    width:70%;
+    height:55%;
+}
+
+.home-main-div .aside-div .main-aside .icons-div .goal-icon{
+    left: 10%;
+}
+
+.home-main-div .aside-div .main-aside .icons-div .reminder-icon{
+    left:31%;
+}
+
+.home-main-div .aside-div .main-aside .icons-div .task-icon{
+    left:52%;
+}
+
+.home-main-div .aside-div .main-aside .icons-div .event-icon{
+    left:73%;
+}
+
+.home-main-div .aside-div .main-aside .label{
+    position:absolute;
+    bottom:9%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    color: #eee;
+}
+
+.home-main-div .aside-div .main-aside .goal-lbl{
+    left:13.3%;
+}
+
+.home-main-div .aside-div .main-aside .reminder-lbl{
+    left:30.5%;
+}
+
+.home-main-div .aside-div .main-aside .task-lbl{
+    left:55%;
+}
+
+.home-main-div .aside-div .main-aside .event-lbl{
+    left:75%;
+}
+
+::-webkit-scrollbar {
+    width: 0;  
+    background: transparent; 
+}
+
+.home-main-div .aside-div .main-aside .goal-div{
+    position:absolute;
+    top:13%;
+    width: 100%;
+    height:79%;
+    /* border:1px solid pink; */
+    overflow-y: scroll; 
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-exercise,
+.home-main-div .aside-div .main-aside .goal-div .goal-skill,
+.home-main-div .aside-div .main-aside .goal-div .goal-fam-friends,
+.home-main-div .aside-div .main-aside .goal-div .goal-me-time,
+.home-main-div .aside-div .main-aside .goal-div .goal-organize{
+    position:absolute;
+    left:1.5%;
+    width:97%;
+    height:25%;
+    background: url(./imgs/main_imgs/goal_exercise.jpg);
+    background-size: 100% 100%;
+    background-position: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-skill{
+    top:26%;
+    background: url(./imgs/main_imgs/goal-skill.jpg);
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-fam-friends{
+    top:52%;
+    background: url(./imgs/main_imgs/goal-fam-friends.jpg);
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-me-time{
+    top:78%;
+    background: url(./imgs/main_imgs/goal-me-time.jpg);
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-organize{
+    top:104%;
+    background: url(./imgs/main_imgs/goal-organize.jpg);
+    background-size: 100% 100%;
+    background-position: center;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal .label{
+    position:absolute;
+    bottom:5%;
+    left:2%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    background:#2a2b2dff;
+    opacity: 0.6;
+    border-radius: 5px;
+    color:#eee;
+    width:70%;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal .label span{
+    font-size: 0.6rem;
 }
 
 .home-main-div .aside-div .no-tasks-div{

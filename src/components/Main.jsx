@@ -14,10 +14,16 @@ class Main extends React.Component {
                 side_header_display : (window.innerWidth <= 770) ? "none" : "flex",
                 aside_div_display : (window.innerWidth <= 770) ? "none" : "block",
                 home_div_opacity : "1",
-                choose_day_display : "block",
-                main_aside_display : "none",
+                choose_day_display : "block", //block
                 no_tasks_display : "none",
-                days_div_border : "none"
+                days_div_border : "none",
+                main_aside_display : "none", // none
+                icons_div_top : "40%", //40%
+                goal_icon_background : "#eee",
+                reminder_icon_background : "#eee",
+                task_icon_background : "#eee",
+                event_icon_background : "#eee",
+                goal_div_display : "none",
             },
             tasks_per_date : [],
         }
@@ -120,6 +126,25 @@ class Main extends React.Component {
         this.setState({styles})
     }
 
+    handleIconClick = (icon) => {
+        var styles = {...this.state.styles}
+
+        styles.icons_div_top = "1%"
+
+        if(icon === "goal"){
+            styles.goal_icon_background = "#9ECEE6"
+        }else if(icon === "reminder"){
+            styles.reminder_icon_background = "#9ECEE6"
+        }else if(icon === "task"){
+            styles.task_icon_background = "#9ECEE6"
+        }else if(icon === "event"){
+            styles.event_icon_background = "#9ECEE6"
+        }
+        styles.goal_div_display = "block"
+        
+        this.setState({styles})
+    }
+
 
     render() { 
         let acc_username = this.props.args.users_account[0].username
@@ -180,7 +205,11 @@ class Main extends React.Component {
                         style={{display : this.state.styles.aside_div_display}}
                     >
 
-                        <label style={{display : this.state.styles.choose_day_display}}>Choose a date</label>
+                        <label 
+                            className="choose-date-lbl"
+                            style={{display : this.state.styles.choose_day_display}}
+                        >
+                            Choose a date</label>
 
                         <div 
                             className="no-tasks-div"
@@ -198,7 +227,84 @@ class Main extends React.Component {
                             className="main-aside"
                             style={{display : this.state.styles.main_aside_display}}
                         >
+                            <div 
+                                className="icons-div"
+                                style={{top : this.state.styles.icons_div_top}}
+                            >
+                                <div 
+                                    className="icon goal-icon"
+                                    onClick={() => this.handleIconClick("goal")}
+                                    style={{background : this.state.styles.goal_icon_background}}
+                                >
+                                    <img src={require('../imgs/main_imgs/goal_icon.png')} alt="img" />
+                                </div>
 
+                                <div 
+                                    className="icon reminder-icon"
+                                    onClick={() => this.handleIconClick("reminder")}
+                                    style={{background : this.state.styles.reminder_icon_background}}
+                                >
+                                    <img src={require('../imgs/main_imgs/reminder_icon.png')} alt="img" />
+                                </div>
+
+                                <div 
+                                    className="icon task-icon"
+                                    onClick={() => this.handleIconClick("task")}
+                                    style={{background : this.state.styles.task_icon_background}}
+                                >
+                                    <img src={require('../imgs/main_imgs/task_icon.png')} alt="img" />
+                                </div>
+
+                                <div 
+                                    className="icon event-icon"
+                                    onClick={() => this.handleIconClick("event")}
+                                    style={{background : this.state.styles.event_icon_background}}
+                                >
+                                    <img src={require('../imgs/main_imgs/event_icon.png')} alt="img" />
+                                </div>
+
+                                <label className="label goal-lbl">Goal</label>
+                                <label className="label reminder-lbl">Reminder</label>
+                                <label className="label task-lbl">Task</label>
+                                <label className="label event-lbl">Event</label>
+                            </div>
+
+                            {/* GOAL DIVISION */}
+                            <div 
+                                className="goal-div"
+                                style={{display : this.state.styles.goal_div_display}}
+                            >
+                                <div className="goal goal-exercise">
+                                    <label className="label goal-exericse-lbl">
+                                        Exercise <br /> <span>Run, do yoga, get your body moving</span>
+                                    </label>
+                                </div>
+
+                                <div className="goal goal-skill">
+                                    <label className="label goal-skill-lbl">
+                                        Build a skill <br /> <span>Learn a language, practice an instrument</span>
+                                    </label>
+                                </div>
+
+                                <div className="goal goal-fam-friends">
+                                    <label className="label goal-fam-friends-lbl">
+                                        Family & friends <br /> <span>Make time for those who matter most</span>
+                                    </label>
+                                </div>
+
+                                <div className="goal goal-me-time">
+                                    <label className="label goal-me-time-lbl">
+                                        Me time <br /> <span>Read, meditate, take care of yourself</span>
+                                    </label>
+                                </div>
+
+                                <div className="goal goal-organize">
+                                    <label className="label goal-organize-lbl">
+                                        Organize my life <br /> <span>Stay on top of things</span>
+                                    </label>
+                                </div>
+                                
+                            </div>
                         </div>
 
                         
