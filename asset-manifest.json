@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/stm-web/static/css/main.8d1419fe.css",
-    "main.js": "/stm-web/static/js/main.78bcee60.js",
+    "main.css": "/stm-web/static/css/main.1f843601.css",
+    "main.js": "/stm-web/static/js/main.990db3bd.js",
     "static/media/index_bg_2.png": "/stm-web/static/media/index_bg_2.ec5a59b7f659592ae280.png",
     "static/media/goal-organize.jpg": "/stm-web/static/media/goal-organize.b172ff1abed2b93e5bb1.jpg",
     "static/media/goal-fam-friends.jpg": "/stm-web/static/media/goal-fam-friends.e4a2d437ed96a43d878f.jpg",
@@ -16,11 +16,11 @@
     "static/media/goal_icon.png": "/stm-web/static/media/goal_icon.4fba3e558cbc7c252918.png",
     "static/media/task_icon.png": "/stm-web/static/media/task_icon.b28aaa5bba9e6c4a49db.png",
     "index.html": "/stm-web/index.html",
-    "main.8d1419fe.css.map": "/stm-web/static/css/main.8d1419fe.css.map",
-    "main.78bcee60.js.map": "/stm-web/static/js/main.78bcee60.js.map"
+    "main.1f843601.css.map": "/stm-web/static/css/main.1f843601.css.map",
+    "main.990db3bd.js.map": "/stm-web/static/js/main.990db3bd.js.map"
   },
   "entrypoints": [
-    "static/css/main.8d1419fe.css",
-    "static/js/main.78bcee60.js"
+    "static/css/main.1f843601.css",
+    "static/js/main.990db3bd.js"
   ]
 }
