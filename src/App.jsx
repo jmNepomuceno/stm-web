@@ -15,14 +15,17 @@ class App extends React.Component {
                     username : "Kyla"
                 }
             ],   
-            users_goals : {
-                year : [],
-                month : [],
-                day : [],
-                time : [],
-                often : [],
-                title : []
-            }
+            user_goals_counter : 0,
+            users_goals : [
+                {
+                    year : "",
+                    month : "",
+                    day : "",
+                    time : "",
+                    often : "",
+                    title : ""
+                }
+            ]
         }
     }
 
@@ -32,14 +35,8 @@ class App extends React.Component {
     }
 
     handleGoalConfirmClick = (obj) => {
-        var users_goals = {...this.state.users_goals}
-        users_goals.year.push(obj.year)
-        users_goals.month.push(obj.month)
-        users_goals.day.push(obj.day)
-        users_goals.time.push(obj.time)
-        users_goals.often.push(obj.often)
-        users_goals.title.push(obj.title)
-        this.setState({users_goals})
+        this.setState({users_goals : [...this.state.users_goals, obj]})
+        this.setState({user_goals_counter : this.state.user_goals_counter + 1})
     }
 
     render() { 
@@ -66,6 +63,7 @@ class App extends React.Component {
                                     {
                                         userAcc_counter : this.state.users_accounts_counter,
                                         users_account : this.state.users_accounts,
+                                        user_goals_counter : this.state.user_goals_counter,
                                         user_goals : this.state.users_goals,
                                         onGoalConfirmClick : this.handleGoalConfirmClick
                                     }

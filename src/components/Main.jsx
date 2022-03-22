@@ -7,6 +7,20 @@ class Main extends React.Component {
         this.state = {
             date : new Date(),
             days_forloop : [],
+            months : [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December   "
+            ],
             styles : {
                 log_out_display : "block",
                 nav_bar_display : (window.innerWidth <= 770) ? "block" : "none",
@@ -15,6 +29,9 @@ class Main extends React.Component {
                 aside_div_display : (window.innerWidth <= 770) ? "none" : "block",
                 home_div_opacity : "1",
                 choose_day_display : "block", //block
+                no_tasks_text : "",
+                no_task_label_left : "0",
+                no_task_label_top : "40%",
                 no_tasks_display : "none",
                 days_div_border : "none",
                 main_aside_display : "none", // none
@@ -29,7 +46,9 @@ class Main extends React.Component {
                 task_div_display : "none",
                 event_div_display : "none",
                 goal_confirm_display : "none",
-                goal_confirm_text : ""
+                goal_confirm_text : "",
+
+                main_aside_scheds_display : "none",
             },
             day_clicked : 0,
             goals : {
@@ -136,11 +155,21 @@ class Main extends React.Component {
             styles.choose_day_display = "none"
             styles.days_div_border = "1px solid #275EA3"
             // if no tasks on that date.
+
             if(sched ){
-                styles.no_tasks_display = "none"
+                styles.no_tasks_display = "block"
+                styles.no_tasks_text = "Add more"
+                styles.no_task_label_left = "30%"
+                styles.no_task_label_top = "70%"
                 styles.main_aside_display = "none"
+
+                styles.main_aside_scheds_display = "block"
             }else{
                 styles.no_tasks_display = "block"
+                styles.no_tasks_text = `No Information for this day yet`
+                styles.no_task_label_left = "0"
+                styles.no_task_label_top = "40%"
+                styles.main_aside_scheds_display = "none"
             }
             
             this.setState({styles})
@@ -241,7 +270,7 @@ class Main extends React.Component {
         goals.year = this.state.date.getFullYear()
         goals.month = this.state.date.getMonth()
         goals.day = this.state.day_clicked
-
+        
         this.setState({goals})
     }
 
@@ -257,25 +286,10 @@ class Main extends React.Component {
 
     render() { 
         let acc_username = this.props.args.users_account[0].username
-        const months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December   "
-        ]
-        
-        //console.log(this.props.args.user_goals.often[0])
+
         let per_week = 1
         let days_forloop_cont = this.state.days_forloop.map(val => {
-            let how_often = this.props.args.user_goals.often[0]
+            let how_often = this.props.args.user_goals[this.props.args.user_goals_counter].often
 
 
             let asterisk_often
@@ -338,6 +352,7 @@ class Main extends React.Component {
             )
         })
 
+        //days_forloop_cont
         const days = days_forloop_cont.map((val) => (
             <div 
                 className={val.cn} 
@@ -400,12 +415,19 @@ class Main extends React.Component {
 
                         <div 
                             className="no-tasks-div"
-                            style={{display : this.state.styles.no_tasks_display}}
+                            style={{
+                                display : this.state.styles.no_tasks_display,
+                                top: this.state.styles.no_task_label_top
+                            }}
                         >
-                            <label>No Information for {months[this.state.date.getMonth()]} {this.state.day_clicked } yet</label>
+                            <label
+                                style={{left : this.state.styles.no_task_label_left}}
+                            >
+                                {this.state.styles.no_tasks_text}
+                            </label>
                             <img 
                                 src={require('../imgs/main_imgs/add_lists.png')} 
-                                alt="img" 
+                                alt="img"
                                 onClick={this.handleNoTasksClick}
                             />
                         </div>
@@ -655,7 +677,13 @@ class Main extends React.Component {
 
                         </div>
 
-                        
+                        <div 
+                            className="main-aside-scheds"
+                            style={{display: this.state.styles.main_aside_scheds_display}}
+                        >
+                            {/* <label> {this.props.args.user_goals.title[this.props.args.user_goals_counter - 1]} </label> */}
+                            <div className="scheds-div"></div>
+                        </div>
 
                     </aside>
 
@@ -687,7 +715,7 @@ class Main extends React.Component {
                                     </i>
 
                                     <div className="date">
-                                        <h1> {months[this.state.date.getMonth()]} </h1>
+                                        <h1> {this.state.months[this.state.date.getMonth()]} </h1>
                                         <p> {this.state.date.toDateString()} </p>
                                     </div>
                                     <i 
