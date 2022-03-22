@@ -129,13 +129,19 @@ class Main extends React.Component {
         this.setState({styles})
     }
 
-    handleDateClick = (num, cn) => {
+    handleDateClick = (num, cn, sched) => {
+        
         var styles = {...this.state.styles}
         if(cn !== 'prev-date' && cn !== 'next-date'){
             styles.choose_day_display = "none"
             styles.days_div_border = "1px solid #275EA3"
             // if no tasks on that date.
-            styles.no_tasks_display = "block"
+            if(sched ){
+                styles.no_tasks_display = "none"
+                styles.main_aside_display = "none"
+            }else{
+                styles.no_tasks_display = "block"
+            }
             
             this.setState({styles})
             this.setState({day_clicked : num})
@@ -239,6 +245,15 @@ class Main extends React.Component {
         this.setState({goals})
     }
 
+    handleGoalFinalConfirm = () =>{
+        this.props.args.onGoalConfirmClick(this.state.goals)
+        
+        var styles = {...this.state.styles}
+        styles.no_tasks_display = "none"
+        styles.main_aside_display = "none"
+        this.setState({styles})
+
+    }
 
     render() { 
         let acc_username = this.props.args.users_account[0].username
@@ -257,31 +272,86 @@ class Main extends React.Component {
             "December   "
         ]
         
+        //console.log(this.props.args.user_goals.often[0])
+        let per_week = 1
+        let days_forloop_cont = this.state.days_forloop.map(val => {
+            let how_often = this.props.args.user_goals.often[0]
 
-        const days = this.state.days_forloop.map((val) => {
-            let every_day = (this.props.args.user_goals.often[0] === "Every day" 
-                            // && val.num >= this.props.args.user_goals.day[0] 
-                            && val.cn !== "prev-date" && val.cn !== "next-date") 
-                            ? "block" : "none"
-            // let once_week = (this.props.args.user_goals.often[0] === "Once a week" 
-            //                 // && val.num === this.props.args.user_goals.day[0] 
-            //                 && val.cn !== "prev-date" && val.cn !== "next-date")
+
+            let asterisk_often
+            
+            if(how_often === "Every day"){
+                asterisk_often = "block"
+            }
+            else if(how_often === "Once a week"){
+                switch(per_week) {
+                    case 1 : asterisk_often = "block"; break;
+                    case 2 : asterisk_often = "none"; break;
+                    case 3 : asterisk_often = "none"; break;
+                    case 4 : asterisk_often = "none"; break;
+                    case 5 : asterisk_often = "none"; break;
+                    case 6 : asterisk_often = "none"; break;
+                    case 7 : asterisk_often = "none"; break;
+                    default : break;
+                }
+            }
+            else if(how_often === "3 times a week"){
+                switch(per_week) {
+                    case 1 : asterisk_often = "block"; break;
+                    case 2 : asterisk_often = "none"; break;
+                    case 3 : asterisk_often = "block"; break;
+                    case 4 : asterisk_often = "none"; break;
+                    case 5 : asterisk_often = "block"; break;
+                    case 6 : asterisk_often = "none"; break;
+                    case 7 : asterisk_often = "none"; break;
+                    default : break;
+                }
+            }else if(how_often === "5 times a week"){
+
+                switch(per_week) {
+                    case 1 : asterisk_often = "block"; break;
+                    case 2 : asterisk_often = "none"; break;
+                    case 3 : asterisk_often = "block"; break;
+                    case 4 : asterisk_often = "block"; break;
+                    case 5 : asterisk_often = "none"; break;
+                    case 6 : asterisk_often = "block"; break;
+                    case 7 : asterisk_often = "block"; break;
+                    default : break;
+                }
+            }else{
+                asterisk_often = "none"
+            }
+
+            if(per_week === 7){
+                per_week = 1
+            }else{
+                per_week += 1
+            }
+            
             return(
-                <div 
-                    className={val.cn} 
-                    key={val.key}
-                    onClick={() => this.handleDateClick(val.num , val.cn)}
-                    
-                >{val.num}
-                    <img 
-                        src={require('../imgs/main_imgs/asterisk.png')} 
-                        alt="img"
-                        // style={{display : every_day}}
-                        style={{display : "none"}}
-                    />
-                </div>
+                {
+                    cn : val.cn,
+                    num : val.num,
+                    key : val.key,
+                    asterisk : asterisk_often
+                }
             )
-        });
+        })
+
+        const days = days_forloop_cont.map((val) => (
+            <div 
+                className={val.cn} 
+                key={val.key}
+                onClick={() => this.handleDateClick(val.num , val.cn, (val.asterisk === "block") ? true : false)}
+                
+            >{val.num}
+                <img 
+                    src={require('../imgs/main_imgs/asterisk.png')} 
+                    alt="img"
+                    style={{display :val.asterisk}}
+                />
+            </div>
+        ));
 
         const nav_styles = {
             display : this.state.styles.nav_bar_display,
@@ -482,7 +552,7 @@ class Main extends React.Component {
                                         </label>
                                         <button 
                                             className="btn btn-success"
-                                            onClick={() => this.props.args.onGoalConfirmClick(this.state.goals)}
+                                            onClick={this.handleGoalFinalConfirm}
                                         >
                                             Add</button>
                                     </div>
