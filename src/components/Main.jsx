@@ -52,6 +52,7 @@ class Main extends React.Component {
             },
             day_clicked : 0,
             goals : {
+                user_counter : "",
                 year : "",
                 month : "",
                 day : "",
@@ -76,14 +77,29 @@ class Main extends React.Component {
         const firstDayIndex = this.state.date.getDay()
 
         for(let x = firstDayIndex; x > 0; x--){
-            days_forloop.push({cn:"prev-date", num : prevlastDay - x + 1, key: key_val++})
+            days_forloop.push({
+                cn:"prev-date", 
+                num : prevlastDay - x + 1, 
+                key: key_val++,
+                asterisk : ""
+            })
         }
         
         for(let i = 1; i <= lastDay; i++){
             if(i === new Date().getDate() && this.state.date.getMonth() === new Date().getMonth()){
-                days_forloop.push({cn:"today", num : i, key: key_val++})
+                days_forloop.push({
+                    cn:"today", 
+                    num : i, key: 
+                    key_val++,
+                    asterisk : ""
+                })
             }else{
-                days_forloop.push({cn:"", num : i, key: key_val++})
+                days_forloop.push({
+                    cn:"", 
+                    num : i, 
+                    key: key_val++,
+                    asterisk : ""
+                })
             }                
         }
 
@@ -93,7 +109,12 @@ class Main extends React.Component {
         const nextDays = 42 - days_forloop.length
         
         for(let j = 1; j <= nextDays; j++){
-            days_forloop.push({cn:"next-date", num : j, key: key_val++})
+            days_forloop.push({
+                cn:"next-date", 
+                num : j,
+                key: key_val++,
+                asterisk : ""
+            })
         }
 
         this.setState(prevState => ({
@@ -270,7 +291,7 @@ class Main extends React.Component {
         goals.year = this.state.date.getFullYear()
         goals.month = this.state.date.getMonth()
         goals.day = this.state.day_clicked
-        
+        goals.user_counter = this.props.args.userAcc_counter
         this.setState({goals})
     }
 
@@ -341,18 +362,18 @@ class Main extends React.Component {
             }else{
                 per_week += 1
             }
-            
+
             return(
                 {
                     cn : val.cn,
                     num : val.num,
                     key : val.key,
-                    asterisk : asterisk_often
+                    //asterisk : asterisk_often
+                    asterisk : (val.asterisk === "block") ? "block" : asterisk_often
                 }
             )
         })
 
-        //days_forloop_cont
         const days = days_forloop_cont.map((val) => (
             <div 
                 className={val.cn} 
@@ -372,7 +393,28 @@ class Main extends React.Component {
             display : this.state.styles.nav_bar_display,
             left: this.state.styles.nav_bar_left
         }
-        // console.log(this.state.goals)
+
+
+        let users_scheds = []
+
+        for(let i = 0; i < this.props.args.user_goals.length; i++){
+            if(this.props.args.user_goals[i].user_counter === 0){
+                users_scheds.push(this.props.args.user_goals[i])
+            }
+        }
+        //console.log(users_scheds)
+        const schedsComponents = users_scheds.map(val => {
+            //console.log(val)
+            return(
+                <div className="scheds-div">
+                    <label className="sched-txt"> Schedule for this day: </label>
+                    <label className="sched-title"> {val.title} </label>
+                    <label className="sched-info"> {val.often} for {val.time} </label>
+
+                    <button className="btn btn-primary">Done</button>
+                </div>
+            )
+        })
         return (
             <React.Fragment>
                 <link
@@ -682,7 +724,8 @@ class Main extends React.Component {
                             style={{display: this.state.styles.main_aside_scheds_display}}
                         >
                             {/* <label> {this.props.args.user_goals.title[this.props.args.user_goals_counter - 1]} </label> */}
-                            <div className="scheds-div"></div>
+                            {/* <div className="scheds-div"></div> */}
+                            {schedsComponents}
                         </div>
 
                     </aside>

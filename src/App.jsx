@@ -18,6 +18,7 @@ class App extends React.Component {
             user_goals_counter : 0,
             users_goals : [
                 {
+                    user_counter : "",
                     year : "",
                     month : "",
                     day : "",
