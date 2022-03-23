@@ -417,7 +417,7 @@ class Main extends React.Component {
         })
 
         let user_scheds_five = user_scheds.filter((val)=>{
-            return val.often === "Once a week" || val.often === "3 times a week" || val.often === "5 times a week"
+            return val.often === "5 times a week"
         })
 
         //console.log(user_scheds_thrice)
@@ -461,19 +461,29 @@ class Main extends React.Component {
         const schedsComponents = user_scheds.map(val => {
             this.state.date.setDate(this.state.day_clicked)
             let day_index = this.state.date.getDay()
-            console.log(day_index)
+            //console.log(day_index)
 
             if(day_index === 0){
-                console.log("once")
-                if(schedsComponents_thrice.length === 0){
+
+                if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0){
+                    console.log("kyla")
                     return schedsComponents_once 
-                }else{
+                }else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0){
+                    console.log("denzelle")
                     return schedsComponents_once.concat(schedsComponents_thrice)
+                }else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0){
+                    console.log("samson")
+                    return schedsComponents_once.concat(schedsComponents_five)
+                }else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0){
+                    console.log("olmo")
+                    return schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five)
                 }
             }
             else if(day_index === 0 || day_index === 2 || day_index === 4){
-                console.log("thrice")
                 return schedsComponents_thrice
+            }
+            else if(day_index === 0 || day_index === 2 || day_index === 4 || day_index === 5 || day_index === 6){
+                return schedsComponents_five
             }
         })
 
