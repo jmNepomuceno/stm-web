@@ -60,7 +60,8 @@ class Main extends React.Component {
                 often : "",
                 title : "",
                 key : 0
-            }
+            },
+            user_scheds : []
         }
     }
 
@@ -302,11 +303,21 @@ class Main extends React.Component {
         styles.no_tasks_display = "none"
         styles.main_aside_display = "none"
 
+        //var user_scheds = {...this.state.user_scheds}
+
+        this.setState({styles})
+
+    }
+
+    render() { 
+        let acc_username = this.props.args.users_account[0].username
+        //console.log(this.state.days_forloop)
+        
         // for asterisk
         let per_week = 1
         let days_forloop_cont = this.state.days_forloop.map(val => {
-            // let how_often = this.props.args.user_goals[this.props.args.user_goals_counter].often
-            let how_often = this.state.goals.often
+            let how_often = this.props.args.user_goals[this.props.args.user_goals_counter].often
+            //let how_often = this.state.goals.often
 
             let asterisk_often
             
@@ -342,8 +353,8 @@ class Main extends React.Component {
                     case 1 : asterisk_often = "block"; break;
                     case 2 : asterisk_often = "none"; break;
                     case 3 : asterisk_often = "block"; break;
-                    case 4 : asterisk_often = "block"; break;
-                    case 5 : asterisk_often = "none"; break;
+                    case 4 : asterisk_often = "none"; break;
+                    case 5 : asterisk_often = "block"; break;
                     case 6 : asterisk_often = "block"; break;
                     case 7 : asterisk_often = "block"; break;
                     default : break;
@@ -368,24 +379,8 @@ class Main extends React.Component {
                 }
             )
         })
-        
-        this.setState({styles})
-        //console.log(days_forloop_cont)
-        this.setState(prevState => ({
-            days_forloop : days_forloop_cont
-        }))
 
-    }
-
-    render() { 
-        let acc_username = this.props.args.users_account[0].username
-        //console.log(this.state.days_forloop)
-        
-        
-
-        // this.state.days_forloop
-        // days_forloop_cont
-        const days = this.state.days_forloop.map((val) => (
+        const days = days_forloop_cont.map((val) => (
             <div 
                 className={val.cn} 
                 key={val.key}
@@ -406,17 +401,28 @@ class Main extends React.Component {
             left: this.state.styles.nav_bar_left
         }
 
-
-        let users_scheds = []
-
+        let user_scheds = []
         for(let i = 0; i < this.props.args.user_goals.length; i++){
             if(this.props.args.user_goals[i].user_counter === 0){
-                users_scheds.push(this.props.args.user_goals[i])
+                user_scheds.push(this.props.args.user_goals[i])
             }
         }
-        //console.log(users_scheds)
-        const schedsComponents = users_scheds.map(val => {
-            //console.log(val)
+
+        let user_scheds_once = user_scheds.filter((val)=>{
+            return val.often === "Once a week"
+        })
+
+        let user_scheds_thrice = user_scheds.filter((val)=>{
+            return val.often === "3 times a week"
+        })
+
+        let user_scheds_five = user_scheds.filter((val)=>{
+            return val.often === "Once a week" || val.often === "3 times a week" || val.often === "5 times a week"
+        })
+
+        //console.log(user_scheds_thrice)
+
+        const schedsComponents_once = user_scheds_once.map(val => {
             return(
                 <div className="scheds-div" key={val.key}>
                     <label className="sched-txt"> Schedule for this day: </label>
@@ -427,6 +433,63 @@ class Main extends React.Component {
                 </div>
             )
         })
+
+        const schedsComponents_thrice = user_scheds_thrice.map(val => {
+            return(
+                <div className="scheds-div" key={val.key}>
+                    <label className="sched-txt"> Schedule for this day: </label>
+                    <label className="sched-title"> {val.title} </label>
+                    <label className="sched-info"> {val.often} for {val.time} </label>
+
+                    <button className="btn btn-primary">Done</button>
+                </div>
+            )
+        })
+
+        const schedsComponents_five = user_scheds_five.map(val => {
+            return(
+                <div className="scheds-div" key={val.key}>
+                    <label className="sched-txt"> Schedule for this day: </label>
+                    <label className="sched-title"> {val.title} </label>
+                    <label className="sched-info"> {val.often} for {val.time} </label>
+
+                    <button className="btn btn-primary">Done</button>
+                </div>
+            )
+        })
+
+        const schedsComponents = user_scheds.map(val => {
+            this.state.date.setDate(this.state.day_clicked)
+            let day_index = this.state.date.getDay()
+            console.log(day_index)
+
+            if(day_index === 0){
+                console.log("once")
+                if(schedsComponents_thrice.length === 0){
+                    return schedsComponents_once 
+                }else{
+                    return schedsComponents_once.concat(schedsComponents_thrice)
+                }
+            }
+            else if(day_index === 0 || day_index === 2 || day_index === 4){
+                console.log("thrice")
+                return schedsComponents_thrice
+            }
+        })
+
+        // let schedsComponents
+        // this.state.date.setDate(this.state.day_clicked)
+        // let day_index = this.state.date.getDay()
+        // console.log(day_index)
+
+        // if(day_index === 0){
+        //     console.log("once")
+        //     schedsComponents = schedsComponents_once
+        // }else if(day_index === 0 || day_index === 2 || day_index === 4){
+        //     console.log("thrice")
+        //     schedsComponents = schedsComponents_thrice
+        // } 
+
         return (
             <React.Fragment>
                 <link
