@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/stm-web/static/css/main.1f843601.css",
-    "main.js": "/stm-web/static/js/main.8a8d9c49.js",
+    "main.js": "/stm-web/static/js/main.3fb6f904.js",
     "static/media/index_bg_2.png": "/stm-web/static/media/index_bg_2.ec5a59b7f659592ae280.png",
     "static/media/goal-organize.jpg": "/stm-web/static/media/goal-organize.b172ff1abed2b93e5bb1.jpg",
     "static/media/goal-fam-friends.jpg": "/stm-web/static/media/goal-fam-friends.e4a2d437ed96a43d878f.jpg",
@@ -17,10 +17,10 @@
     "static/media/task_icon.png": "/stm-web/static/media/task_icon.b28aaa5bba9e6c4a49db.png",
     "index.html": "/stm-web/index.html",
     "main.1f843601.css.map": "/stm-web/static/css/main.1f843601.css.map",
-    "main.8a8d9c49.js.map": "/stm-web/static/js/main.8a8d9c49.js.map"
+    "main.3fb6f904.js.map": "/stm-web/static/js/main.3fb6f904.js.map"
   },
   "entrypoints": [
     "static/css/main.1f843601.css",
-    "static/js/main.8a8d9c49.js"
+    "static/js/main.3fb6f904.js"
   ]
 }
