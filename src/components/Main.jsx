@@ -58,7 +58,8 @@ class Main extends React.Component {
                 day : "",
                 time : "",
                 often : "",
-                title : ""
+                title : "",
+                key : 0
             }
         }
     }
@@ -81,7 +82,7 @@ class Main extends React.Component {
                 cn:"prev-date", 
                 num : prevlastDay - x + 1, 
                 key: key_val++,
-                asterisk : ""
+                asterisk : "none"
             })
         }
         
@@ -91,14 +92,14 @@ class Main extends React.Component {
                     cn:"today", 
                     num : i, key: 
                     key_val++,
-                    asterisk : ""
+                    asterisk : "none"
                 })
             }else{
                 days_forloop.push({
                     cn:"", 
                     num : i, 
                     key: key_val++,
-                    asterisk : ""
+                    asterisk : "none"
                 })
             }                
         }
@@ -113,15 +114,13 @@ class Main extends React.Component {
                 cn:"next-date", 
                 num : j,
                 key: key_val++,
-                asterisk : ""
+                asterisk : "none"
             })
         }
 
         this.setState(prevState => ({
             days_forloop : days_forloop
         }))
-
-
     }
 
     handleNextMonth = () => {
@@ -292,6 +291,7 @@ class Main extends React.Component {
         goals.month = this.state.date.getMonth()
         goals.day = this.state.day_clicked
         goals.user_counter = this.props.args.userAcc_counter
+        goals.key = goals.key += 1
         this.setState({goals})
     }
 
@@ -301,17 +301,12 @@ class Main extends React.Component {
         var styles = {...this.state.styles}
         styles.no_tasks_display = "none"
         styles.main_aside_display = "none"
-        this.setState({styles})
 
-    }
-
-    render() { 
-        let acc_username = this.props.args.users_account[0].username
-
+        // for asterisk
         let per_week = 1
         let days_forloop_cont = this.state.days_forloop.map(val => {
-            let how_often = this.props.args.user_goals[this.props.args.user_goals_counter].often
-
+            // let how_often = this.props.args.user_goals[this.props.args.user_goals_counter].often
+            let how_often = this.state.goals.often
 
             let asterisk_often
             
@@ -373,8 +368,24 @@ class Main extends React.Component {
                 }
             )
         })
+        
+        this.setState({styles})
+        //console.log(days_forloop_cont)
+        this.setState(prevState => ({
+            days_forloop : days_forloop_cont
+        }))
 
-        const days = days_forloop_cont.map((val) => (
+    }
+
+    render() { 
+        let acc_username = this.props.args.users_account[0].username
+        //console.log(this.state.days_forloop)
+        
+        
+
+        // this.state.days_forloop
+        // days_forloop_cont
+        const days = this.state.days_forloop.map((val) => (
             <div 
                 className={val.cn} 
                 key={val.key}
@@ -384,6 +395,7 @@ class Main extends React.Component {
                 <img 
                     src={require('../imgs/main_imgs/asterisk.png')} 
                     alt="img"
+                    key={val.key}
                     style={{display :val.asterisk}}
                 />
             </div>
@@ -406,7 +418,7 @@ class Main extends React.Component {
         const schedsComponents = users_scheds.map(val => {
             //console.log(val)
             return(
-                <div className="scheds-div">
+                <div className="scheds-div" key={val.key}>
                     <label className="sched-txt"> Schedule for this day: </label>
                     <label className="sched-title"> {val.title} </label>
                     <label className="sched-info"> {val.often} for {val.time} </label>
@@ -582,6 +594,7 @@ class Main extends React.Component {
                                             type="text" 
                                             name="goal-title"
                                             onChange={this.handleGoalOnChange} 
+                                            autoComplete="off"
                                         />
                                     </div>
 

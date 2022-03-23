@@ -41,7 +41,7 @@ class App extends React.Component {
     }
 
     render() { 
-        console.log(this.state.users_goals)
+        //console.log(this.state.users_goals)
         return (
             <Router basename='stm-web'>
                 <React.Fragment>
