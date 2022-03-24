@@ -585,6 +585,7 @@ input[type=password]{
     background: #2a2b2dff;
     /* background: pink; */ 
     overflow-y: scroll; 
+    display:none;
 }
 
 .home-main-div .aside-div .main-aside-scheds .scheds-div{

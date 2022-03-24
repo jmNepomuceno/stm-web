@@ -291,7 +291,7 @@ class Main extends React.Component {
         goals.year = this.state.date.getFullYear()
         goals.month = this.state.date.getMonth()
         goals.day = this.state.day_clicked
-        goals.user_counter = this.props.args.userAcc_counter
+        goals.user_counter = this.props.args.userAcc_counter - 1
         goals.key = goals.key += 1
         this.setState({goals})
     }
@@ -424,6 +424,7 @@ class Main extends React.Component {
         }
 
         let user_scheds = []
+        console.log(this.props.args.user_goals)
         for(let i = 0; i < this.props.args.user_goals.length; i++){
             if(this.props.args.user_goals[i].user_counter === 0){
                 user_scheds.push(this.props.args.user_goals[i])
@@ -549,8 +550,8 @@ class Main extends React.Component {
                     schedsComponents = schedsComponents_thrice.concat(schedsComponents_every)
                 }
                 else if(schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
-                    schedsComponents = schedsComponents_thrice.concat(schedsComponents_five, schedsComponents_every)
-                }
+                    schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
+                }   
             }
             else if(day_index === 0 || day_index === 2 || day_index === 4 || day_index === 5 || day_index === 6){
                 if(schedsComponents_every.length === 0){

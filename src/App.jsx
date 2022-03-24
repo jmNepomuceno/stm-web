@@ -11,9 +11,9 @@ class App extends React.Component {
         this.state = {
             users_accounts_counter : 0,
             users_accounts : [
-                {
-                    username : "Kyla"
-                }
+                // {
+                //     username : "Kyla"
+                // }
             ],   
             user_goals_counter : 0,
             users_goals : [
@@ -70,7 +70,7 @@ class App extends React.Component {
             <Router basename='stm-web'>
                 <React.Fragment>
                     <Routes>
-                        <Route path="/home" exact element={
+                        <Route path="/" exact element={
                             <React.Fragment>
                                 <Sign 
                                     args = {
@@ -82,7 +82,7 @@ class App extends React.Component {
                             </React.Fragment>
                         } />
 
-                        <Route path="/" exact element={
+                        <Route path="/home" exact element={
                             <Main 
                                 args = {
                                     {
