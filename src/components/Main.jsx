@@ -311,7 +311,7 @@ class Main extends React.Component {
 
     render() { 
         let acc_username = this.props.args.users_account[0].username
-        console.log(this.state.days_forloop)
+        //console.log(this.state.days_forloop)
         
         // for asterisk
         let per_week = 1
@@ -335,6 +335,8 @@ class Main extends React.Component {
                     case 7 : asterisk_often = "none"; break;
                     default : break;
                 }
+
+                // if user_goals has thrice a week
             }
             else if(how_often === "3 times a week"){
                 switch(per_week) {
@@ -368,18 +370,18 @@ class Main extends React.Component {
             }else{
                 per_week += 1
             }
-
+            //console.log(val.asterisk)
             return(
                 {
                     cn : val.cn,
                     num : val.num,
                     key : val.key,
-                    //asterisk : asterisk_often
-                    asterisk : (val.asterisk === "block") ? "block" : asterisk_often
+                    asterisk : asterisk_often
+                    //asterisk : (val.asterisk === "block") ? "block" : asterisk_often
                 }
             )
         })
-        console.log("asdf")
+
         const days = days_forloop_cont.map((val) => (
             <div 
                 className={val.cn} 
@@ -492,7 +494,7 @@ class Main extends React.Component {
             }
             else if(day_index === 0 || day_index === 2 || day_index === 4){
                 if(schedsComponents_five.length === 0){
-                    console.log("kyla")
+                    //console.log("kyla")
                     schedsComponents = schedsComponents_thrice 
                 }
                 // else if(schedsComponents_once.length !== 0 && schedsComponents_five.length === 0){
@@ -500,7 +502,7 @@ class Main extends React.Component {
                 //     schedsComponents = schedsComponents_thrice.concat(schedsComponents_once)
                 // }
                 else if(schedsComponents_five.length !== 0){
-                    console.log("samson")
+                    //console.log("samson")
                     schedsComponents = schedsComponents_thrice.concat(schedsComponents_five)
                 }
                 // else if(schedsComponents_once.length !== 0 && schedsComponents_five.length !== 0){
