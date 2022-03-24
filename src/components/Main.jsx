@@ -311,7 +311,7 @@ class Main extends React.Component {
 
     render() { 
         let acc_username = this.props.args.users_account[0].username
-        //console.log(this.state.days_forloop)
+        console.log(this.state.days_forloop)
         
         // for asterisk
         let per_week = 1
@@ -379,7 +379,7 @@ class Main extends React.Component {
                 }
             )
         })
-
+        console.log("asdf")
         const days = days_forloop_cont.map((val) => (
             <div 
                 className={val.cn} 
