@@ -429,7 +429,12 @@ class Main extends React.Component {
                     <label className="sched-title"> {val.title} </label>
                     <label className="sched-info"> {val.often} for {val.time} </label>
 
-                    <button className="btn btn-primary">Done</button>
+                    <button 
+                        className="btn btn-primary"
+                        onClick={() =>this.props.args.onGoalDoneClick(val)}
+                    >
+                        Done
+                    </button>
                 </div>
             )
         })
@@ -441,7 +446,12 @@ class Main extends React.Component {
                     <label className="sched-title"> {val.title} </label>
                     <label className="sched-info"> {val.often} for {val.time} </label>
 
-                    <button className="btn btn-primary">Done</button>
+                    <button 
+                        className="btn btn-primary"
+                        onClick={() =>this.props.args.onGoalDoneClick(val)}
+                    >
+                        Done
+                    </button>
                 </div>
             )
         })
@@ -453,64 +463,56 @@ class Main extends React.Component {
                     <label className="sched-title"> {val.title} </label>
                     <label className="sched-info"> {val.often} for {val.time} </label>
 
-                    <button className="btn btn-primary">Done</button>
+                    <button 
+                        className="btn btn-primary"
+                        onClick={() =>this.props.args.onGoalDoneClick(val)}
+                    >
+                        Done
+                    </button>
                 </div>
             )
         })
 
-        const schedsComponents = user_scheds.map(val => {
+        let schedsComponents 
+        for(let i = 0; i <= user_scheds.length - 1; i++){
             this.state.date.setDate(this.state.day_clicked)
             let day_index = this.state.date.getDay()
-            //console.log(day_index)
-
+            
             if(day_index === 0){
 
                 if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0){
-                    return schedsComponents_once 
+                    schedsComponents = schedsComponents_once 
                 }else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0){
-                    return schedsComponents_once.concat(schedsComponents_thrice)
+                    schedsComponents = schedsComponents_once.concat(schedsComponents_thrice)
                 }else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0){
-                    return schedsComponents_once.concat(schedsComponents_five)
+                    schedsComponents = schedsComponents_once.concat(schedsComponents_five)
                 }else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0){
-                    return schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five)
+                    schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five)
                 }
             }
             else if(day_index === 0 || day_index === 2 || day_index === 4){
                 if(schedsComponents_five.length === 0){
                     console.log("kyla")
-                    return schedsComponents_thrice 
+                    schedsComponents = schedsComponents_thrice 
                 }
                 // else if(schedsComponents_once.length !== 0 && schedsComponents_five.length === 0){
                 //     console.log("denzelle")
-                //     return schedsComponents_thrice.concat(schedsComponents_once)
+                //     schedsComponents = schedsComponents_thrice.concat(schedsComponents_once)
                 // }
                 else if(schedsComponents_five.length !== 0){
                     console.log("samson")
-                    return schedsComponents_thrice.concat(schedsComponents_five)
+                    schedsComponents = schedsComponents_thrice.concat(schedsComponents_five)
                 }
                 // else if(schedsComponents_once.length !== 0 && schedsComponents_five.length !== 0){
                 //     console.log("olmo")
-                //     return schedsComponents_thrice.concat(schedsComponents_once,schedsComponents_five)
+                //     schedsComponents = schedsComponents_thrice.concat(schedsComponents_once,schedsComponents_five)
                 // }
             }
             else if(day_index === 0 || day_index === 2 || day_index === 4 || day_index === 5 || day_index === 6){
-                return schedsComponents_five
+                schedsComponents = schedsComponents_five
             }
-        })
-
-        // let schedsComponents
-        // this.state.date.setDate(this.state.day_clicked)
-        // let day_index = this.state.date.getDay()
-        // console.log(day_index)
-
-        // if(day_index === 0){
-        //     console.log("once")
-        //     schedsComponents = schedsComponents_once
-        // }else if(day_index === 0 || day_index === 2 || day_index === 4){
-        //     console.log("thrice")
-        //     schedsComponents = schedsComponents_thrice
-        // } 
-
+        }
+        
         return (
             <React.Fragment>
                 <link
@@ -820,8 +822,6 @@ class Main extends React.Component {
                             className="main-aside-scheds"
                             style={{display: this.state.styles.main_aside_scheds_display}}
                         >
-                            {/* <label> {this.props.args.user_goals.title[this.props.args.user_goals_counter - 1]} </label> */}
-                            {/* <div className="scheds-div"></div> */}
                             {schedsComponents}
                         </div>
 

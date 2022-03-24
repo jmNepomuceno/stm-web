@@ -40,8 +40,31 @@ class App extends React.Component {
         this.setState({user_goals_counter : this.state.user_goals_counter + 1})
     }
 
+    handleGoalDoneClick = (obj) =>{
+        let index = 0
+        console.log(this.state.users_goals)
+        for(let i = 0; i < this.state.users_goals.length; i++){
+            // console.log(obj.title , this.state.users_goals[i].title)
+            if(obj.month === this.state.users_goals[i].month && 
+                obj.day === this.state.users_goals[i].day &&
+                obj.time === this.state.users_goals[i].time &&
+                obj.title === this.state.users_goals[i].title){
+                index = i
+                break;   
+            }
+        }
+        let users_goals = []
+        for(let i = 0; i < this.state.users_goals.length; i++){
+            if(i !== index){
+                users_goals.push(this.state.users_goals[i])
+            }
+        }
+
+        console.log(users_goals)
+    }
+
     render() { 
-        //console.log(this.state.users_goals)
+        // console.log(this.state.users_goals)
         return (
             <Router basename='stm-web'>
                 <React.Fragment>
@@ -66,7 +89,8 @@ class App extends React.Component {
                                         users_account : this.state.users_accounts,
                                         user_goals_counter : this.state.user_goals_counter,
                                         user_goals : this.state.users_goals,
-                                        onGoalConfirmClick : this.handleGoalConfirmClick
+                                        onGoalConfirmClick : this.handleGoalConfirmClick,
+                                        onGoalDoneClick : this.handleGoalDoneClick
                                     }
                                 }
                             />
