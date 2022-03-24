@@ -60,7 +60,8 @@ class App extends React.Component {
             }
         }
 
-        console.log(users_goals)
+        this.setState({users_goals : users_goals})
+        this.setState({user_goals_counter : this.state.user_goals_counter - 1})
     }
 
     render() { 
