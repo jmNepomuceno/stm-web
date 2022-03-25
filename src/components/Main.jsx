@@ -61,6 +61,16 @@ class Main extends React.Component {
                 title : "",
                 key : 0
             },
+            reminders : {
+                user_counter : "",
+                year : "",
+                month : "",
+                day : "",
+                time : "",
+                often : "",
+                title : "",
+                key : 0
+            },
             user_scheds : []
         }
     }
@@ -291,7 +301,8 @@ class Main extends React.Component {
         goals.year = this.state.date.getFullYear()
         goals.month = this.state.date.getMonth()
         goals.day = this.state.day_clicked
-        goals.user_counter = this.props.args.userAcc_counter - 1
+        //goals.user_counter = this.props.args.userAcc_counter - 1
+        goals.user_counter = this.props.args.userAcc_counter
         goals.key = goals.key += 1
         this.setState({goals})
     }
@@ -309,15 +320,55 @@ class Main extends React.Component {
 
     }
 
+    // REMINDER HANDLES
+    handleReminderOnChange = (event) =>{
+        const {name, value} = event.target
+
+        var reminders = {...this.state.reminders}
+
+        if(name === "reminder-title"){
+            reminders.title = value
+        }
+        else if(name === "time-select"){
+            reminders.time = value
+        }
+        else if(name === "repeat-select"){
+            reminders.often = value
+        }
+
+        reminders.year = this.state.date.getFullYear()
+        reminders.month = this.state.date.getMonth()
+        reminders.day = this.state.day_clicked
+        //reminders.user_counter = this.props.args.userAcc_counter - 1
+        reminders.user_counter = this.props.args.userAcc_counter
+        reminders.key = reminders.key += 1
+        this.setState({reminders})
+    }
+
+    handleReminderFinalConfirm = () =>{
+        this.props.args.onReminderConfirmClick(this.state.reminders)
+        
+        var styles = {...this.state.styles}
+        styles.no_tasks_display = "none"
+        styles.main_aside_display = "none"
+
+        //var user_scheds = {...this.state.user_scheds}
+
+        this.setState({styles})
+
+    }
+
     render() { 
         let acc_username = this.props.args.users_account[0].username
-        //console.log(this.state.days_forloop)
+        const lastDay = new Date(this.state.date.getFullYear(),this.state.date.getMonth() + 1,0).getDate();
+        //console.log(lastDay)
         
         // for asterisk
         let per_week = 1
         let days_forloop_cont = this.state.days_forloop.map(val => {
+
             let how_often = this.props.args.user_goals[this.props.args.user_goals_counter].often
-            
+        
             let if_three = false, if_five = false, if_everyday = false
             for(let i = 0; i < this.props.args.user_goals.length; i++){
                 if(this.props.args.user_goals[i].often === "3 times a week"){
@@ -400,7 +451,13 @@ class Main extends React.Component {
                     //asterisk : (val.asterisk === "block") ? "block" : asterisk_often
                 }
             )
+
+
+            // asdf
+            
         })
+
+        
 
         const days = days_forloop_cont.map((val) => (
             <div 
@@ -424,7 +481,7 @@ class Main extends React.Component {
         }
 
         let user_scheds = []
-        console.log(this.props.args.user_goals)
+        //console.log(this.props.args.user_goals)
         for(let i = 0; i < this.props.args.user_goals.length; i++){
             if(this.props.args.user_goals[i].user_counter === 0){
                 user_scheds.push(this.props.args.user_goals[i])
@@ -565,6 +622,8 @@ class Main extends React.Component {
             }
         }
         
+        // console.log(this.state.reminders)
+
         return (
             <React.Fragment>
                 <link
@@ -781,9 +840,15 @@ class Main extends React.Component {
                                 style={{display : this.state.styles.reminder_div_display}}
                             >
 
-                                <input type="text" className="remind-me-txt" placeholder="Remind me to..."/>
+                                <input 
+                                    type="text" 
+                                    className="remind-me-txt" 
+                                    placeholder="Remind me to..."
+                                    name="reminder-title"
+                                    onChange={this.handleReminderOnChange}
+                                />
                                 
-                                <select name="time" className="time-select">
+                                <select name="time-select" className="time-select" onChange={this.handleReminderOnChange}>
                                     <option value="" disabled selected>On what time...</option>
                                     <option value="1:00">1:00</option>
                                     <option value="2:00">2:00</option>
@@ -812,13 +877,27 @@ class Main extends React.Component {
                                     
                                 </select>
 
-                                <select name="time" className="repeat-select">
+                                <select name="repeat-select" className="repeat-select" onChange={this.handleReminderOnChange}>
                                     <option value="" disabled selected>Repeat every...</option>
                                     <option value="Every day">Every day</option>
                                     <option value="Every week">Every week</option>
                                     <option value="Every month">Every month</option>
                                     <option value="Every year">Every year</option>
                                 </select>
+
+                                <div className="confirm-goal">
+                                        <label className="goal-title">{this.state.reminders.title}</label>
+                                        <label className="goal-info">
+                                            Calendar will schedule: <br/>
+                                            {this.state.reminders.time} <br/>
+                                            {this.state.reminders.often}
+                                        </label>
+                                        <button 
+                                            className="btn btn-success"
+                                            onClick={this.handleReminderFinalConfirm}
+                                        >
+                                            Add</button>
+                                    </div>
                             </div>
 
                             {/* TASK DIVISION */}

@@ -11,12 +11,24 @@ class App extends React.Component {
         this.state = {
             users_accounts_counter : 0,
             users_accounts : [
-                // {
-                //     username : "Kyla"
-                // }
+                {
+                    username : "Kyla"
+                }
             ],   
             user_goals_counter : 0,
             users_goals : [
+                {
+                    user_counter : "",
+                    year : "",
+                    month : "",
+                    day : "",
+                    time : "",
+                    often : "",
+                    title : ""
+                }
+            ],
+            user_reminders_counter : 0,
+            users_reminders : [
                 {
                     user_counter : "",
                     year : "",
@@ -38,6 +50,11 @@ class App extends React.Component {
     handleGoalConfirmClick = (obj) => {
         this.setState({users_goals : [...this.state.users_goals, obj]})
         this.setState({user_goals_counter : this.state.user_goals_counter + 1})
+    }
+
+    handleReminderConfirmClick = (obj) => {
+        this.setState({users_reminders : [...this.state.users_reminders, obj]})
+        this.setState({user_reminders_counter : this.state.user_reminders_counter + 1})
     }
 
     handleGoalDoneClick = (obj) =>{
@@ -65,12 +82,12 @@ class App extends React.Component {
     }
 
     render() { 
-        //console.log(this.state.users_goals)
+        console.log(this.state.users_reminders)
         return (
             <Router basename='stm-web'>
                 <React.Fragment>
                     <Routes>
-                        <Route path="/" exact element={
+                        <Route path="/home" exact element={
                             <React.Fragment>
                                 <Sign 
                                     args = {
@@ -82,7 +99,7 @@ class App extends React.Component {
                             </React.Fragment>
                         } />
 
-                        <Route path="/home" exact element={
+                        <Route path="/" exact element={
                             <Main 
                                 args = {
                                     {
@@ -91,7 +108,10 @@ class App extends React.Component {
                                         user_goals_counter : this.state.user_goals_counter,
                                         user_goals : this.state.users_goals,
                                         onGoalConfirmClick : this.handleGoalConfirmClick,
-                                        onGoalDoneClick : this.handleGoalDoneClick
+                                        onGoalDoneClick : this.handleGoalDoneClick,
+                                        onReminderConfirmClick : this.handleReminderConfirmClick,
+                                        user_reminders_counter : this.state.user_reminders_counter,
+                                        user_reminders : this.state.users_reminders,    
                                     }
                                 }
                             />
