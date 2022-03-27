@@ -3,7 +3,13 @@ import React from 'react';
 class cont extends Component {
     state = {  } 
     render() { 
-        let how_often = this.props.args.user_reminders[this.props.args.user_reminders_counter].often
+ 
+        // *******************************************
+        
+
+
+            // 
+            let how_often = this.props.args.user_reminders[ this.props.args.user_reminders_counter].often
 
             let if_week = false, if_month = false, if_year = false
             for(let i = 0; i < this.props.args.user_reminders.length; i++){
@@ -32,18 +38,27 @@ class cont extends Component {
             }
 
             let asterisk_often
-            //console.log(how_often)
+            
+            let days_arr = []
+            for(let i = 0; i < this.props.args.user_reminders.length; i++){
+                days_arr.push(this.props.args.user_reminders[i].day)
+            }
+
             if(how_often === "Every day"){
                 asterisk_often = "block"
             }
             else if(how_often === "Every week"){
-                // this.state.date.setDate(val.num)
-                // let day_index = this.state.date.getDay()
-                // console.log(day_index)
-                if(val.cn !== 'next-date' && val.num === this.state.day_clicked){
+                console.log(curr_day_index_month)
+                if(val.cn !== 'next-date' && days_arr.includes(val.num) && curr_day_index_month === 2){
                     asterisk_often = "block"
+                    this.state.date.setDate(val.num)
+                    day_index = this.state.date.getDay() + 1
                 }else{
                     asterisk_often = "none"
+                }  
+                //console.log(val.num, per_week, day_index)
+                if(per_week === day_index){
+                    asterisk_often = "block"
                 }
             }
             // else if(how_often === "Every month"){
@@ -89,9 +104,13 @@ class cont extends Component {
                     //asterisk : (val.asterisk === "block") ? "block" : asterisk_often
                 }
             )
+
+
+            // asdf
         return (
             <h1>Kyla Denzelle Samson Olmo</h1>
         );
+
     }
 }
  

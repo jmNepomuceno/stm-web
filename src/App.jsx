@@ -82,7 +82,7 @@ class App extends React.Component {
     }
 
     render() { 
-        console.log(this.state.users_reminders)
+        //console.log(this.state.users_reminders)
         return (
             <Router basename='stm-web'>
                 <React.Fragment>

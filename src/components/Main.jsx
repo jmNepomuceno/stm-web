@@ -360,13 +360,12 @@ class Main extends React.Component {
 
     render() { 
         let acc_username = this.props.args.users_account[0].username
-        const lastDay = new Date(this.state.date.getFullYear(),this.state.date.getMonth() + 1,0).getDate();
+        //const lastDay = new Date(this.state.date.getFullYear(),this.state.date.getMonth() + 1,0).getDate();
         //console.log(lastDay)
         
         // for asterisk
         let per_week = 1
         let days_forloop_cont = this.state.days_forloop.map(val => {
-
             let how_often = this.props.args.user_goals[this.props.args.user_goals_counter].often
         
             let if_three = false, if_five = false, if_everyday = false
@@ -451,10 +450,6 @@ class Main extends React.Component {
                     //asterisk : (val.asterisk === "block") ? "block" : asterisk_often
                 }
             )
-
-
-            // asdf
-            
         })
 
         
