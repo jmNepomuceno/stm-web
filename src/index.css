@@ -29,15 +29,35 @@ body{
     position: absolute;
     top:32%;
     left:10%;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 3.7rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 5rem;
     font-weight: bold;
     letter-spacing:1px;
     /* border:1px solid black; */
     width:45%;
-    color: #2a2b2dff;
+    height:30%;
+    /* color: #2a2b2dff; */
     /* color: #fcf6f5ff; */
+    color:black;
     text-align:left;
+}
+
+.home-div #title-div span{
+    position:absolute;
+    top:60%;
+    left:2%;
+    font-size: 1.5rem;
+    font-weight: normal;
+    letter-spacing:1px;
+}
+
+.home-div #title-div hr{
+    position:absolute;
+    bottom:5%;
+    color:black;
+    width:100%;
+    height:3%;
+    opacity: 0.9;
 }
 
 .home-div .login-div{
@@ -182,6 +202,34 @@ input[type=password]{
     height:80%;
 }
 
+.home-main-div .goal-points-div{
+    position:absolute;
+    top:5%;
+    right:15%;
+    width:15%;
+    height:90%;
+    background: #2a2b2dff;
+    border-radius: 5px;
+}
+
+.home-main-div .goal-points-div label{
+    position:absolute;
+    top:25%;
+    color:#f2f2f2;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.home-main-div .goal-points-div .gp-lbl{
+    left:5%;
+}
+
+.home-main-div .goal-points-div .gs-lbl{
+    right:5%;
+    color: #2da8d8ff;
+}
+
 .home-main-div .side-header{
     position:absolute;
     width:25%;
@@ -230,83 +278,30 @@ input[type=password]{
     background: #2a2b2dff;
 }
 
-.home-main-div .aside-div .main-aside .icons-div{
-    position:relative;
-    top:40%;
-    width:100%;
-    height:12%;
-    transition:0.5s;
-    /* border:1px solid white; */
-}
-
-.home-main-div .aside-div .main-aside .icons-div .icon{
+.home-main-div .aside-div .main-aside .goal-header{
     position:absolute;
-    top:10%;
-    width:15%;
-    height:60%;
-    border-radius: 50%;
-    background:#eee;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0.8;
-    cursor:pointer;
-    transition: 0.5s;
-}
-
-.home-main-div .aside-div .main-aside .icons-div .icon img{
+    top:2%;
+    left:13%;
     width:70%;
-    height:55%;
-}
-
-.home-main-div .aside-div .main-aside .icons-div .goal-icon{
-    left: 10%;
-}
-
-.home-main-div .aside-div .main-aside .icons-div .reminder-icon{
-    left:31%;
-}
-
-.home-main-div .aside-div .main-aside .icons-div .task-icon{
-    left:52%;
-}
-
-.home-main-div .aside-div .main-aside .icons-div .event-icon{
-    left:73%;
-}
-
-.home-main-div .aside-div .main-aside .label{
-    position:absolute;
-    bottom:9%;
+    height:10%;
+    border:1px solid #EEE;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.65rem;
+    font-size: 1.15rem;
     letter-spacing: 1px;
     color: #eee;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 65px;
 }
 
-.home-main-div .aside-div .main-aside .goal-lbl{
-    left:13.3%;
-}
-
-.home-main-div .aside-div .main-aside .reminder-lbl{
-    left:30.5%;
-}
-
-.home-main-div .aside-div .main-aside .task-lbl{
-    left:55%;
-}
-
-.home-main-div .aside-div .main-aside .event-lbl{
-    left:75%;
-}
 
 ::-webkit-scrollbar {
     width: 0;  
     background: transparent; 
 }
 
-.home-main-div .aside-div .main-aside .goal-div,
-.home-main-div .aside-div .main-aside .reminder-div{
+.home-main-div .aside-div .main-aside .goal-div{
     position:absolute;
     top:13%;
     width: 100%;
@@ -458,12 +453,51 @@ input[type=password]{
     color:#eee;
 }
 
-.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .confirm-goal button{
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div .confirm-goal .add-btn{
     position:absolute;
     top:35%;
     right:2%;
     cursor:pointer;
 }
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div form{
+    position:absolute;
+    top:82%;
+    left:2.5%;
+    width:95%;
+    height:17%;
+    /* border:1px solid white; */
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div form .subject,
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div form .goalTitle,
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div form textarea{
+    display:none;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div form .user_email{
+    position:absolute;
+    top:0%;
+    width:100%;
+    height:45%;
+    background:transparent;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color:#eee;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div form .user_email:focus{
+    outline:none;
+}
+
+.home-main-div .aside-div .main-aside .goal-div .goal-confirm-div form button{
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
+
 
 /* REMINDER DIV */
 .home-main-div .aside-div .main-aside .reminder-div .remind-me-txt{
@@ -848,14 +882,25 @@ $desktop : 1200px; */
     }
 
     .home-div #title-div{
-        top:20%;
+        top:35%;
         left:0;
         width:100%;
-        font-size: 3.5rem;
+        font-size: 2.7rem;
         text-align: center;
 
         /* display:none; */
+    }
 
+    .home-div #title-div span{
+        font-size: 0.8rem;
+        top:30%;
+        left:25%;
+    }
+
+    .home-div #title-div hr{
+        top:35%;
+        left:2.5%;
+        width:95%;
     }
 
     .home-div .login-div{

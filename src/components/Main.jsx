@@ -1,5 +1,6 @@
 import React from 'react'
 import  {Link} from 'react-router-dom'
+import emailjs from 'emailjs-com'
 class Main extends React.Component {
     
     constructor(){
@@ -42,9 +43,6 @@ class Main extends React.Component {
                 event_icon_background : "#eee",
                 goal_div_container_display : "none",
                 goal_div_display : "none",
-                reminder_div_display : "none",
-                task_div_display : "none",
-                event_div_display : "none",
                 goal_confirm_display : "none",
                 goal_confirm_text : "",
 
@@ -59,22 +57,14 @@ class Main extends React.Component {
                 time : "",
                 often : "",
                 title : "",
-                key : 0
-            },
-            reminders : {
-                user_counter : "",
-                year : "",
-                month : "",
-                day : "",
-                time : "",
-                often : "",
-                title : "",
-                key : 0
+                key : 0,
+                click : 0,
+                click_index : 0
             },
             user_scheds : []
         }
     }
-
+    
     componentDidMount() {
         this.renderCalendar()
     }
@@ -175,7 +165,9 @@ class Main extends React.Component {
         var styles = {...this.state.styles}
         styles.no_tasks_display = "none"
         styles.main_aside_display = "block"
-
+        styles.goal_div_container_display = "block"
+        styles.goal_div_display = "block"
+        styles.goal_confirm_display = "none"
         this.setState({styles})
     }
 
@@ -198,9 +190,12 @@ class Main extends React.Component {
             }else{
                 styles.no_tasks_display = "block"
                 styles.no_tasks_text = `No Information for this day yet`
+                //styles.no_tasks_text = `No Information for ${this.state.months[this.state.date.getMonth()]} ${this.state.day_clicked} yet`
                 styles.no_task_label_left = "0"
                 styles.no_task_label_top = "40%"
                 styles.main_aside_scheds_display = "none"
+                styles.main_aside_display = "none"
+                
             }
             
             this.setState({styles})
@@ -210,69 +205,69 @@ class Main extends React.Component {
         
     }
 
-    handleIconClick = (icon) => {
-        var styles = {...this.state.styles}
+    // handleIconClick = (icon) => {
+    //     var styles = {...this.state.styles}
 
-        styles.icons_div_top = "1%"
+    //     styles.icons_div_top = "1%"
 
-        if(icon === "goal"){
-            styles.goal_icon_background = "#9ECEE6"
-            styles.goal_div_display = "block"
-            styles.goal_div_container_display = "block"
+    //     if(icon === "goal"){
+    //         styles.goal_icon_background = "#9ECEE6"
+    //         styles.goal_div_display = "block"
+    //         styles.goal_div_container_display = "block"
 
-            styles.reminder_div_display = "none"
-            styles.task_div_display = "none"
-            styles.event_div_display = "none"
+    //         styles.reminder_div_display = "none"
+    //         styles.task_div_display = "none"
+    //         styles.event_div_display = "none"
 
-            styles.reminder_icon_background = "white"
-            styles.task_icon_background = "white"
-            styles.event_icon_background = "white"
-        }
-        else if(icon === "reminder"){
-            styles.reminder_icon_background = "#9ECEE6"
-            styles.reminder_div_display = "block"
+    //         styles.reminder_icon_background = "white"
+    //         styles.task_icon_background = "white"
+    //         styles.event_icon_background = "white"
+    //     }
+    //     else if(icon === "reminder"){
+    //         styles.reminder_icon_background = "#9ECEE6"
+    //         styles.reminder_div_display = "block"
 
-            styles.goal_confirm_display = "none"
+    //         styles.goal_confirm_display = "none"
 
-            styles.goal_div_display = "none"
-            styles.task_div_display = "none"
-            styles.event_div_display = "none"
+    //         styles.goal_div_display = "none"
+    //         styles.task_div_display = "none"
+    //         styles.event_div_display = "none"
 
-            styles.goal_icon_background = "white"
-            styles.task_icon_background = "white"
-            styles.event_icon_background = "white"
-        }
-        else if(icon === "task"){
-            styles.task_icon_background = "#9ECEE6"
-            styles.task_div_display = "block"
+    //         styles.goal_icon_background = "white"
+    //         styles.task_icon_background = "white"
+    //         styles.event_icon_background = "white"
+    //     }
+    //     else if(icon === "task"){
+    //         styles.task_icon_background = "#9ECEE6"
+    //         styles.task_div_display = "block"
 
-            styles.goal_confirm_display = "none"
+    //         styles.goal_confirm_display = "none"
 
-            styles.goal_div_display = "none"
-            styles.reminder_div_display = "none"
-            styles.event_div_display = "none"
+    //         styles.goal_div_display = "none"
+    //         styles.reminder_div_display = "none"
+    //         styles.event_div_display = "none"
 
-            styles.goal_icon_background = "white"
-            styles.reminder_icon_background = "white"
-            styles.event_icon_background = "white"
-        }
-        else if(icon === "event"){
-            styles.event_icon_background = "#9ECEE6"
+    //         styles.goal_icon_background = "white"
+    //         styles.reminder_icon_background = "white"
+    //         styles.event_icon_background = "white"
+    //     }
+    //     else if(icon === "event"){
+    //         styles.event_icon_background = "#9ECEE6"
 
-            styles.goal_confirm_display = "none"
+    //         styles.goal_confirm_display = "none"
 
-            styles.goal_div_display = "none"
-            styles.task_div_display = "none"
-            styles.reminder_div_display = "none"
+    //         styles.goal_div_display = "none"
+    //         styles.task_div_display = "none"
+    //         styles.reminder_div_display = "none"
 
-            styles.goal_icon_background = "white"
-            styles.reminder_icon_background = "white"
-            styles.task_icon_background = "white"
-        }
+    //         styles.goal_icon_background = "white"
+    //         styles.reminder_icon_background = "white"
+    //         styles.task_icon_background = "white"
+    //     }
        
         
-        this.setState({styles})
-    }
+    //     this.setState({styles})
+    // }
 
     handleGoalConfirmClick = (what) => {
         var styles = {...this.state.styles}
@@ -302,8 +297,30 @@ class Main extends React.Component {
         goals.month = this.state.date.getMonth()
         goals.day = this.state.day_clicked
         //goals.user_counter = this.props.args.userAcc_counter - 1
-        goals.user_counter = this.props.args.userAcc_counter
+        let acc_curr_index = 0
+        for(let i = 0; i < this.props.args.users_account.length; i++){
+            if(this.props.args.users_account[i].username === this.props.args.onAccCurr.username &&
+                this.props.args.users_account[i].password === this.props.args.onAccCurr.password){
+                    acc_curr_index = i
+                }
+        }
+        goals.user_counter = acc_curr_index
         goals.key = goals.key += 1
+
+        if(goals.often === "Once a week"){
+            goals.click = 52
+            goals.click_index = 0
+        }else if(goals.often === "3 times a week"){
+            goals.click = 156
+            goals.click_index = 0
+        }else if(goals.often === "5 times a week"){
+            goals.click = 260
+            goals.click_index = 0
+        }else if(goals.often === "Every day"){
+            goals.click = 364
+            goals.click_index = 0
+        }
+
         this.setState({goals})
     }
 
@@ -320,63 +337,80 @@ class Main extends React.Component {
 
     }
 
-    // REMINDER HANDLES
-    handleReminderOnChange = (event) =>{
-        const {name, value} = event.target
+    handleSendEmail = (e) =>{
+        e.preventDefault();
 
-        var reminders = {...this.state.reminders}
-
-        if(name === "reminder-title"){
-            reminders.title = value
-        }
-        else if(name === "time-select"){
-            reminders.time = value
-        }
-        else if(name === "repeat-select"){
-            reminders.often = value
-        }
-
-        reminders.year = this.state.date.getFullYear()
-        reminders.month = this.state.date.getMonth()
-        reminders.day = this.state.day_clicked
-        //reminders.user_counter = this.props.args.userAcc_counter - 1
-        reminders.user_counter = this.props.args.userAcc_counter
-        reminders.key = reminders.key += 1
-        this.setState({reminders})
+        emailjs.sendForm('service_cv55nuw', 'template_lchtv91', e.target, 'fC-rvQbRASsOoS3po')
+        .then((result) => {
+            console.log(result.text);
+        }, (error) => {
+            console.log(error.text);
+        });
+        e.target.reset()
     }
-
-    handleReminderFinalConfirm = () =>{
-        this.props.args.onReminderConfirmClick(this.state.reminders)
-        
-        var styles = {...this.state.styles}
-        styles.no_tasks_display = "none"
-        styles.main_aside_display = "none"
-
-        //var user_scheds = {...this.state.user_scheds}
-
-        this.setState({styles})
-
-    }
-
     render() { 
-        let acc_username = this.props.args.users_account[0].username
-        //const lastDay = new Date(this.state.date.getFullYear(),this.state.date.getMonth() + 1,0).getDate();
-        //console.log(lastDay)
+
+        let acc_curr_index = 0
+        for(let i = 0; i < this.props.args.users_account.length; i++){
+            if(this.props.args.users_account[i].username === this.props.args.onAccCurr.username &&
+                this.props.args.users_account[i].password === this.props.args.onAccCurr.password){
+                    acc_curr_index = i
+                }
+        }
+        let acc_username = this.props.args.users_account[acc_curr_index].username
+        //console.log(acc_curr_index)
         
         // for asterisk
         let per_week = 1
-        let days_forloop_cont = this.state.days_forloop.map(val => {
-            let how_often = this.props.args.user_goals[this.props.args.user_goals_counter].often
+        //console.log(this.props.args.user_goals)
+
+        // let arr_per_acc = this.props.args.user_goals.filter(val=>{
+        //     return(
+        //         val.user_counter === acc_curr_index
+        //     )
+        // })
+
+        let arr_per_acc = [
+            {
+                user_counter : "",
+                year : "",
+                month : "",
+                day : "",
+                time : "",
+                often : "",
+                title : ""
+            }
+        ]
+        for(let i = 0; i < this.props.args.user_goals.length; i++){
+            if(this.props.args.user_goals[i].user_counter === acc_curr_index){
+                arr_per_acc.push(this.props.args.user_goals[i])
+            }
+        }
+
+        //console.log("array per account " , arr_per_acc)
+        //console.log( this.props.args.user_goals,this.props.args.user_goals_counter )
         
-            let if_three = false, if_five = false, if_everyday = false
-            for(let i = 0; i < this.props.args.user_goals.length; i++){
-                if(this.props.args.user_goals[i].often === "3 times a week"){
+        let current_click_val = 0, click_index_val = []
+        //console.log(this.props.args.onOftenDone)
+    
+        //console.log(current_click_val , click_index_val)
+
+        let days_forloop_cont = this.state.days_forloop.map(val => {
+            //let how_often = this.props.args.user_goals[this.props.args.user_goals_counter].often
+            let how_often = arr_per_acc[arr_per_acc.length - 1].often 
+            
+            let if_once = false, if_three = false, if_five = false, if_everyday = false
+            for(let i = 0; i < arr_per_acc.length; i++){
+                if(arr_per_acc[i].often === "Once a week"){
+                    if_once = true
+                }
+                if(arr_per_acc[i].often === "3 times a week"){
                     if_three = true
                 }
-                if(this.props.args.user_goals[i].often === "5 times a week"){
+                if(arr_per_acc[i].often === "5 times a week"){
                     if_five = true
                 }
-                if(this.props.args.user_goals[i].often === "Every day"){
+                if(arr_per_acc[i].often === "Every day"){
                     if_everyday = true
                 }
             }
@@ -391,6 +425,24 @@ class Main extends React.Component {
                 how_often = "Every day"
             }
 
+            for(let i = 0; i < this.props.args.user_goals.length; i++){
+                //console.log(this.props.args.user_goals[i].click, this.props.args.user_goals[i].click_index)
+                if(this.props.args.onOftenDone === this.props.args.user_goals[i].often){
+                    if(this.props.args.user_goals[i].click < 52){
+                        current_click_val = this.props.args.user_goals[i].click
+                        click_index_val = this.props.args.onClickedDone
+                    }
+                    else if(this.props.args.user_goals[i].click < 156){
+                        current_click_val = this.props.args.user_goals[i].click
+                        click_index_val = this.props.args.onClickedDone
+                    }
+                    else if(this.props.args.user_goals[i].click < 260){
+                        current_click_val = this.props.args.user_goals[i].click
+                        click_index_val = this.props.args.onClickedDone
+                    }
+                }
+            }
+            //console.log(current_click_val,click_index_val)
             let asterisk_often
             
             if(how_often === "Every day"){
@@ -407,6 +459,13 @@ class Main extends React.Component {
                     case 7 : asterisk_often = "none"; break;
                     default : break;
                 }
+                // if(current_click_val < 52 && current_click_val !== 0){
+                //     for(let i = 0; i < click_index_val.length; i++){
+                //         if(val.num === click_index_val[i]){
+                //             asterisk_often = "none"
+                //         }
+                //     }
+                // }
             }
             else if(how_often === "3 times a week"){
                 switch(per_week) {
@@ -419,8 +478,16 @@ class Main extends React.Component {
                     case 7 : asterisk_often = "none"; break;
                     default : break;
                 }
-            }else if(how_often === "5 times a week"){
 
+                // if(current_click_val < 156 && current_click_val !== 0 ){
+                //     for(let i = 0; i < click_index_val.length; i++){
+                //         if(val.num === click_index_val[i]){
+                //             asterisk_often = "none"
+                //         }
+                //     }
+                // }
+            }
+            else if(how_often === "5 times a week"){
                 switch(per_week) {
                     case 1 : asterisk_often = "block"; break;
                     case 2 : asterisk_often = "none"; break;
@@ -431,6 +498,14 @@ class Main extends React.Component {
                     case 7 : asterisk_often = "block"; break;
                     default : break;
                 }
+
+                // if(current_click_val < 260 && current_click_val !== 0 ){
+                //     for(let i = 0; i < click_index_val.length; i++){
+                //         if(val.num === click_index_val[i]){
+                //             asterisk_often = "none"
+                //         }
+                //     }
+                // }
             }else{
                 asterisk_often = "none"
             }
@@ -441,6 +516,11 @@ class Main extends React.Component {
                 per_week += 1
             }
             //console.log(val.asterisk)
+            for(let i = 0; i < click_index_val.length; i++){
+                if(val.num === click_index_val[i]){
+                    asterisk_often = "none"
+                }
+            }
             return(
                 {
                     cn : val.cn,
@@ -476,12 +556,14 @@ class Main extends React.Component {
         }
 
         let user_scheds = []
-        //console.log(this.props.args.user_goals)
-        for(let i = 0; i < this.props.args.user_goals.length; i++){
-            if(this.props.args.user_goals[i].user_counter === 0){
-                user_scheds.push(this.props.args.user_goals[i])
+        //console.log("account current index" , acc_curr_index)
+        for(let i = 0; i < arr_per_acc.length; i++){
+            if(arr_per_acc[i].user_counter === acc_curr_index){
+                user_scheds.push(arr_per_acc[i])
             }
         }
+
+        //console.log("user_scheds" , user_scheds)
 
         let user_scheds_once = user_scheds.filter((val)=>{
             return val.often === "Once a week"
@@ -499,6 +581,7 @@ class Main extends React.Component {
             return val.often === "Every day"
         })
 
+        // console.log(user_scheds_once)
 
         const schedsComponents_once = user_scheds_once.map(val => {
             return(
@@ -509,7 +592,7 @@ class Main extends React.Component {
 
                     <button 
                         className="btn btn-primary"
-                        onClick={() =>this.props.args.onGoalDoneClick(val)}
+                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked)}
                     >
                         Done
                     </button>
@@ -526,7 +609,7 @@ class Main extends React.Component {
 
                     <button 
                         className="btn btn-primary"
-                        onClick={() =>this.props.args.onGoalDoneClick(val)}
+                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked)}
                     >
                         Done
                     </button>
@@ -543,7 +626,7 @@ class Main extends React.Component {
 
                     <button 
                         className="btn btn-primary"
-                        onClick={() =>this.props.args.onGoalDoneClick(val)}
+                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked)}
                     >
                         Done
                     </button>
@@ -560,7 +643,7 @@ class Main extends React.Component {
 
                     <button 
                         className="btn btn-primary"
-                        onClick={() =>this.props.args.onGoalDoneClick(val)}
+                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked)}
                     >
                         Done
                     </button>
@@ -570,24 +653,33 @@ class Main extends React.Component {
 
         let schedsComponents 
         for(let i = 0; i <= user_scheds.length - 1; i++){
-            this.state.date.setDate(this.state.day_clicked)
-            let day_index = this.state.date.getDay()
-            
+            let new_Date = this.state.date
+            new_Date.setDate(this.state.day_clicked)
+            let day_index = new_Date.getDay()
+            //console.log(day_index)
             if(day_index === 0){
-
                 if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_once 
-                }else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
+                }
+                else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_once.concat(schedsComponents_thrice)
-                }else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
+                }
+                else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_once.concat(schedsComponents_five)
-                }else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
+                }
+                else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
                     schedsComponents = schedsComponents_once.concat(schedsComponents_every)
-                }else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
+                }
+                else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five)
-                }else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
+                }
+                else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
+                    schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_every)
+                }
+                else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
                     schedsComponents = schedsComponents_once.concat(schedsComponents_five,schedsComponents_every)
-                }else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
+                }
+                else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
                     schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five,schedsComponents_every)
                 }
             }
@@ -617,8 +709,8 @@ class Main extends React.Component {
             }
         }
         
-        // console.log(this.state.reminders)
-
+        //console.log(this.props.args.onUserPoints[acc_curr_index])
+        let points = (this.props.args.onUserPoints[acc_curr_index] === undefined) ? 0 : this.props.args.onUserPoints[acc_curr_index]
         return (
             <React.Fragment>
                 <link
@@ -630,7 +722,7 @@ class Main extends React.Component {
                 <main className="home-main-div">
 
                     <header className="home-header">
-                        <Link to={'/home'}>
+                        <Link to={'/'}>
                             <label style={{display : this.state.styles.log_out_display}}>Log out</label>
                         </Link>
                         <img 
@@ -639,6 +731,12 @@ class Main extends React.Component {
                             style={nav_styles}
                             onClick={this.handleNavBarClick}
                         />
+
+                        <div className="goal-points-div">
+                            <label className="gp-lbl">Goal Points: </label>
+                            <label className="gs-lbl">{points}</label>
+
+                        </div>
                     </header>
 
                     <aside 
@@ -682,47 +780,8 @@ class Main extends React.Component {
                             className="main-aside"
                             style={{display : this.state.styles.main_aside_display}}
                         >
-                            <div 
-                                className="icons-div"
-                                style={{top : this.state.styles.icons_div_top}}
-                            >
-                                <div 
-                                    className="icon goal-icon"
-                                    onClick={() => this.handleIconClick("goal")}
-                                    style={{background : this.state.styles.goal_icon_background}}
-                                >
-                                    <img src={require('../imgs/main_imgs/goal_icon.png')} alt="img" />
-                                </div>
 
-                                <div 
-                                    className="icon reminder-icon"
-                                    onClick={() => this.handleIconClick("reminder")}
-                                    style={{background : this.state.styles.reminder_icon_background}}
-                                >
-                                    <img src={require('../imgs/main_imgs/reminder_icon.png')} alt="img" />
-                                </div>
-
-                                <div 
-                                    className="icon task-icon"
-                                    onClick={() => this.handleIconClick("task")}
-                                    style={{background : this.state.styles.task_icon_background}}
-                                >
-                                    <img src={require('../imgs/main_imgs/task_icon.png')} alt="img" />
-                                </div>
-
-                                <div 
-                                    className="icon event-icon"
-                                    onClick={() => this.handleIconClick("event")}
-                                    style={{background : this.state.styles.event_icon_background}}
-                                >
-                                    <img src={require('../imgs/main_imgs/event_icon.png')} alt="img" />
-                                </div>
-
-                                <label className="label goal-lbl">Goal</label>
-                                <label className="label reminder-lbl">Reminder</label>
-                                <label className="label task-lbl">Task</label>
-                                <label className="label event-lbl">Event</label>
-                            </div>
+                            <label className="goal-header">Choose your Goal</label>
                             
                             {/* GOAL DIVISION */}
                             <div 
@@ -820,128 +879,23 @@ class Main extends React.Component {
                                             {this.state.goals.time}
                                         </label>
                                         <button 
-                                            className="btn btn-success"
+                                            className="btn btn-success add-btn"
                                             onClick={this.handleGoalFinalConfirm}
                                         >
                                             Add</button>
                                     </div>
+                                    <form onSubmit={this.handleSendEmail}>
+                                        <div className="email-div">
+                                            <input className="subject" type="text" name="subject" value="Your Goal" />
+                                            <input className="goalTitle" type="text" name="goalTitle" value={this.state.goals.title} />
+                                            <textarea name="schedule" value={`Schedule set on: ${this.state.goals.often} ${this.state.goals.time} `} ></textarea>
+                                            <input className="user_email" type="text" name="user_email" placeholder="Your e-mail" required />
+                                            <button type="submit" className="btn btn-primary">Send a copy on my Email</button>
+                                        </div>
+                                    </form>
                                 </div>
 
                             </div>
-
-                            {/* REMINDER DIVISION */}
-                            <div 
-                                className="reminder-div"
-                                style={{display : this.state.styles.reminder_div_display}}
-                            >
-
-                                <input 
-                                    type="text" 
-                                    className="remind-me-txt" 
-                                    placeholder="Remind me to..."
-                                    name="reminder-title"
-                                    onChange={this.handleReminderOnChange}
-                                />
-                                
-                                <select name="time-select" className="time-select" onChange={this.handleReminderOnChange}>
-                                    <option value="" disabled selected>On what time...</option>
-                                    <option value="1:00">1:00</option>
-                                    <option value="2:00">2:00</option>
-                                    <option value="3:00">3:00</option>
-                                    <option value="4:00">4:00</option>
-                                    <option value="5:00">5:00</option>
-                                    <option value="6:00">6:00</option>
-                                    <option value="7:00">7:00</option>
-                                    <option value="8:00">8:00</option>
-                                    <option value="9:00">9:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="13:00">13:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="17:00">17:00</option>
-                                    <option value="18:00">18:00</option>
-                                    <option value="19:00">19:00</option>
-                                    <option value="20:00">20:00</option>
-                                    <option value="21:00">21:00</option>
-                                    <option value="22:00">22:00</option>
-                                    <option value="23:00">23:00</option>
-                                    <option value="24:00">24:00</option>
-                                    
-                                </select>
-
-                                <select name="repeat-select" className="repeat-select" onChange={this.handleReminderOnChange}>
-                                    <option value="" disabled selected>Repeat every...</option>
-                                    <option value="Every day">Every day</option>
-                                    <option value="Every week">Every week</option>
-                                    <option value="Every month">Every month</option>
-                                    <option value="Every year">Every year</option>
-                                </select>
-
-                                <div className="confirm-goal">
-                                        <label className="goal-title">{this.state.reminders.title}</label>
-                                        <label className="goal-info">
-                                            Calendar will schedule: <br/>
-                                            {this.state.reminders.time} <br/>
-                                            {this.state.reminders.often}
-                                        </label>
-                                        <button 
-                                            className="btn btn-success"
-                                            onClick={this.handleReminderFinalConfirm}
-                                        >
-                                            Add</button>
-                                    </div>
-                            </div>
-
-                            {/* TASK DIVISION */}
-                            <div 
-                                className="task-div"
-                                style={{display : this.state.styles.task_div_display}}
-                            >
-
-                                <input type="text" className="add-title-txt" placeholder="Add title"/>
-                                <input type="text" className="add-details-txt" placeholder="Add details"/>
-                                
-                                <select name="time" className="time-select">
-                                    <option value="" disabled selected>On what time...</option>
-                                    <option value="1:00">1:00</option>
-                                    <option value="2:00">2:00</option>
-                                    <option value="3:00">3:00</option>
-                                    <option value="4:00">4:00</option>
-                                    <option value="5:00">5:00</option>
-                                    <option value="6:00">6:00</option>
-                                    <option value="7:00">7:00</option>
-                                    <option value="8:00">8:00</option>
-                                    <option value="9:00">9:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="11:00">11:00</option>
-                                    <option value="12:00">12:00</option>
-                                    <option value="13:00">13:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="16:00">16:00</option>
-                                    <option value="17:00">17:00</option>
-                                    <option value="18:00">18:00</option>
-                                    <option value="19:00">19:00</option>
-                                    <option value="20:00">20:00</option>
-                                    <option value="21:00">21:00</option>
-                                    <option value="22:00">22:00</option>
-                                    <option value="23:00">23:00</option>
-                                    <option value="24:00">24:00</option>
-                                    
-                                </select>
-
-                                <select name="time" className="repeat-select">
-                                    <option value="" disabled selected>Repeat every...</option>
-                                    <option value="Every day">Every day</option>
-                                    <option value="Every week">Every week</option>
-                                    <option value="Every month">Every month</option>
-                                    <option value="Every year">Every year</option>
-                                </select>
-                            </div>
-
                         </div>
 
                         <div 
@@ -1010,6 +964,13 @@ class Main extends React.Component {
                             </div>
                         </div>
                     </div>
+
+                    {/* SENDING EMAIL */}
+                    {/* <form className="form-email">
+                        <label className="goal-what"></label>
+                        <label className="goal-duration"></label>
+                    </form>
+                    <script src="https://smtpjs.com/v3/smtp.js"></script> */}
                 </main>
             </React.Fragment>
         );
