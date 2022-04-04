@@ -349,7 +349,6 @@ class Main extends React.Component {
         e.target.reset()
     }
     render() { 
-
         let acc_curr_index = 0
         for(let i = 0; i < this.props.args.users_account.length; i++){
             if(this.props.args.users_account[i].username === this.props.args.onAccCurr.username &&
@@ -459,13 +458,14 @@ class Main extends React.Component {
                     case 7 : asterisk_often = "none"; break;
                     default : break;
                 }
-                // if(current_click_val < 52 && current_click_val !== 0){
-                //     for(let i = 0; i < click_index_val.length; i++){
-                //         if(val.num === click_index_val[i]){
-                //             asterisk_often = "none"
-                //         }
-                //     }
-                // }
+                if(current_click_val < 52 && current_click_val !== 0 &&
+                    if_three && if_five && if_everyday){
+                    for(let i = 0; i < click_index_val.length; i++){
+                        if(val.num === click_index_val[i]){
+                            asterisk_often = "none"
+                        }
+                    }
+                }
             }
             else if(how_often === "3 times a week"){
                 switch(per_week) {
@@ -479,13 +479,14 @@ class Main extends React.Component {
                     default : break;
                 }
 
-                // if(current_click_val < 156 && current_click_val !== 0 ){
-                //     for(let i = 0; i < click_index_val.length; i++){
-                //         if(val.num === click_index_val[i]){
-                //             asterisk_often = "none"
-                //         }
-                //     }
-                // }
+                if(current_click_val < 156 && current_click_val !== 0 &&
+                    if_once && if_five && if_everyday){
+                    for(let i = 0; i < click_index_val.length; i++){
+                        if(val.num === click_index_val[i]){
+                            asterisk_often = "none"
+                        }
+                    }
+                }
             }
             else if(how_often === "5 times a week"){
                 switch(per_week) {
@@ -499,13 +500,14 @@ class Main extends React.Component {
                     default : break;
                 }
 
-                // if(current_click_val < 260 && current_click_val !== 0 ){
-                //     for(let i = 0; i < click_index_val.length; i++){
-                //         if(val.num === click_index_val[i]){
-                //             asterisk_often = "none"
-                //         }
-                //     }
-                // }
+                if(current_click_val < 260 && current_click_val !== 0 &&
+                    if_once && if_three && if_everyday){
+                    for(let i = 0; i < click_index_val.length; i++){
+                        if(val.num === click_index_val[i]){
+                            asterisk_often = "none"
+                        }
+                    }
+                }
             }else{
                 asterisk_often = "none"
             }
@@ -516,11 +518,12 @@ class Main extends React.Component {
                 per_week += 1
             }
             //console.log(val.asterisk)
-            for(let i = 0; i < click_index_val.length; i++){
-                if(val.num === click_index_val[i]){
-                    asterisk_often = "none"
-                }
-            }
+            // for(let i = 0; i < click_index_val.length; i++){
+            //     if(val.num === click_index_val[i]){
+            //         asterisk_often = "none"
+            //     }
+            // }
+
             return(
                 {
                     cn : val.cn,
@@ -584,6 +587,9 @@ class Main extends React.Component {
         // console.log(user_scheds_once)
 
         const schedsComponents_once = user_scheds_once.map(val => {
+            let new_Date = this.state.date
+            new_Date.setDate(this.state.day_clicked)
+            let day_index = new_Date.getDay()
             return(
                 <div className="scheds-div" key={val.key}>
                     <label className="sched-txt"> Schedule for this day: </label>
@@ -592,7 +598,7 @@ class Main extends React.Component {
 
                     <button 
                         className="btn btn-primary"
-                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked)}
+                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked,day_index)}
                     >
                         Done
                     </button>
@@ -601,6 +607,9 @@ class Main extends React.Component {
         })
 
         const schedsComponents_thrice = user_scheds_thrice.map(val => {
+            let new_Date = this.state.date
+            new_Date.setDate(this.state.day_clicked)
+            let day_index = new_Date.getDay()
             return(
                 <div className="scheds-div" key={val.key}>
                     <label className="sched-txt"> Schedule for this day: </label>
@@ -609,7 +618,7 @@ class Main extends React.Component {
 
                     <button 
                         className="btn btn-primary"
-                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked)}
+                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked,day_index)}
                     >
                         Done
                     </button>
@@ -618,6 +627,9 @@ class Main extends React.Component {
         })
 
         const schedsComponents_five = user_scheds_five.map(val => {
+            let new_Date = this.state.date
+            new_Date.setDate(this.state.day_clicked)
+            let day_index = new_Date.getDay()
             return(
                 <div className="scheds-div" key={val.key}>
                     <label className="sched-txt"> Schedule for this day: </label>
@@ -626,7 +638,7 @@ class Main extends React.Component {
 
                     <button 
                         className="btn btn-primary"
-                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked)}
+                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked,day_index)}
                     >
                         Done
                     </button>
@@ -635,6 +647,9 @@ class Main extends React.Component {
         })
 
         const schedsComponents_every = user_scheds_every.map(val => {
+            let new_Date = this.state.date
+            new_Date.setDate(this.state.day_clicked)
+            let day_index = new_Date.getDay()
             return(
                 <div className="scheds-div" key={val.key}>
                     <label className="sched-txt"> Schedule for this day: </label>
@@ -643,7 +658,7 @@ class Main extends React.Component {
 
                     <button 
                         className="btn btn-primary"
-                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked)}
+                        onClick={() =>this.props.args.onGoalDoneClick(val,this.state.day_clicked,day_index)}
                     >
                         Done
                     </button>
@@ -656,13 +671,17 @@ class Main extends React.Component {
             let new_Date = this.state.date
             new_Date.setDate(this.state.day_clicked)
             let day_index = new_Date.getDay()
-            //console.log(day_index)
+
             if(day_index === 0){
                 if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_once 
                 }
                 else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
-                    schedsComponents = schedsComponents_once.concat(schedsComponents_thrice)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_thrice
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice)
+                    }
                 }
                 else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_once.concat(schedsComponents_five)

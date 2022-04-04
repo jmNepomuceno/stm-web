@@ -32,6 +32,7 @@ class App extends React.Component {
                     often : "",
                     title : "",
                     click : 0,
+                    click_index : 0
                 }
             ],
             clicked_done : [],
@@ -71,8 +72,8 @@ class App extends React.Component {
         this.setState({user_goals_counter : this.state.user_goals_counter + 1})
     }
 
-    handleGoalDoneClick = (obj, day_click) =>{
-        //console.log(day_click)
+    handleGoalDoneClick = (obj, day_click, day_index) =>{
+        //console.log(day_index)
         let index = 0
         for(let i = 0; i < this.state.users_goals.length; i++){
             // console.log(obj.title , this.state.users_goals[i].title)
@@ -107,6 +108,7 @@ class App extends React.Component {
             for(let i = 0; i < this.state.users_goals.length; i++){
                 if(i === index){
                     users_goals[i].click -= 1
+                    users_goals[i].click_index = day_index
                     clicked_done.push(day_click)
                     this.setState({what_done_often : users_goals[i].often})
                 }
