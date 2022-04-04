@@ -19,7 +19,8 @@ class Sign extends React.Component {
                 title_div_txt_display : "block"
             },
             username : "",
-            password : ""          
+            password : "" ,
+            valid_to_go : false       
         }
     }
 
@@ -179,6 +180,7 @@ class Sign extends React.Component {
                                 {this.state.sign.Log_in_btn_txt}
                             </button>
                         </Link>
+                        
                     </form>
     
                     <label 

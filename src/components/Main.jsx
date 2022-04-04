@@ -666,13 +666,14 @@ class Main extends React.Component {
             )
         })
 
+
         let schedsComponents 
         for(let i = 0; i <= user_scheds.length - 1; i++){
             let new_Date = this.state.date
             new_Date.setDate(this.state.day_clicked)
             let day_index = new_Date.getDay()
 
-            if(day_index === 0){
+            if(day_index === 0 && schedsComponents_once.length !== 0){
                 if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_once 
                 }
@@ -684,46 +685,87 @@ class Main extends React.Component {
                     }
                 }
                 else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
-                    schedsComponents = schedsComponents_once.concat(schedsComponents_five)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_five
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_five)
+                    }
                 }
                 else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
-                    schedsComponents = schedsComponents_once.concat(schedsComponents_every)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_every
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_every)
+                    }
                 }
                 else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
-                    schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five)
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five)
+                    }
                 }
                 else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
-                    schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_every)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_every)
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_every)
+                    }
                 }
                 else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
-                    schedsComponents = schedsComponents_once.concat(schedsComponents_five,schedsComponents_every)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_five.concat(schedsComponents_every)
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_five,schedsComponents_every)
+                    }
                 }
                 else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
-                    schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five,schedsComponents_every)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five,schedsComponents_every)
+                    }
                 }
             }
-            else if(day_index === 0 || day_index === 2 || day_index === 4){
+            else if((day_index === 0 || day_index === 2 || day_index === 4) && schedsComponents_thrice.length !== 0){
                 if(schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_thrice 
                 }
                 else if(schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
-                    schedsComponents = schedsComponents_thrice.concat(schedsComponents_five)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_five
+                    }else{
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five)
+                    }
                 }
                 else if(schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
-                    schedsComponents = schedsComponents_thrice.concat(schedsComponents_every)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_every
+                    }else{
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_every)
+                    }
                 }
                 else if(schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
-                    schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_five.concat(schedsComponents_every)
+                    }else{
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
+                    }
                 }   
             }
-            else if(day_index === 0 || day_index === 2 || day_index === 4 || day_index === 5 || day_index === 6){
+            else if((day_index === 0 || day_index === 2 || day_index === 4 || day_index === 5 || day_index === 6) && schedsComponents_five.length !== 0){
                 if(schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_five
                 }else{
-                    schedsComponents = schedsComponents_five.concat(schedsComponents_every)
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_every
+                    }else{
+                        schedsComponents = schedsComponents_five.concat(schedsComponents_every)
+                    }  
                 }
             }
             else if(day_index === 0 || day_index === 1 || day_index === 2 || day_index === 3 || day_index === 4 || day_index === 5 || day_index === 6) {
+                console.log("her3e")
                 schedsComponents = schedsComponents_every
             }
         }
