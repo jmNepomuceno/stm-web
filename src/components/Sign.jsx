@@ -110,14 +110,18 @@ class Sign extends React.Component {
         }
         //console.log(valid_login)
         if(valid_login || this.state.sign.Log_in_btn_txt === "Sign In"){
+            this.setState({valid_to_go : !this.statevalid_to_go})
             this.props.args.onLogInClick(obj)
         }
-
+        
         this.props.args.onUserCurrAccounts(obj)
     }
+    
 
     render() { 
-
+        const ConditionalLink = ({ children, to, condition }) => (!!condition && to)
+                                    ? <Link to={to}>{children}</Link>
+                                    : <>{children}</>;
         return(
             <main className="home-div">
                 <link
@@ -165,7 +169,7 @@ class Sign extends React.Component {
                             onChange={this.handleSetUserAccount}
                             required 
                         />
-                        <Link to="/home">
+                        <ConditionalLink to="/home" condition={this.state.valid_to_go}>
                             <button 
                                 type="submit" 
                                 className="btn btn-primary" 
@@ -179,7 +183,7 @@ class Sign extends React.Component {
 
                                 {this.state.sign.Log_in_btn_txt}
                             </button>
-                        </Link>
+                        </ConditionalLink>
                         
                     </form>
     
