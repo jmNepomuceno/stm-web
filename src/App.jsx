@@ -37,6 +37,7 @@ class App extends React.Component {
             ],
             clicked_done : [],
             what_done_often : "",
+            what_done_often_arr : [],
             user_goals_points : [
                 0
             ]
@@ -96,6 +97,7 @@ class App extends React.Component {
 
         let users_goals = [], clicked_done
         //console.log(this.state.users_goals)
+        let what_done_often_arr = this.state.what_done_often_arr
         if(this.state.users_goals[index].click - 1 === 0){
             for(let i = 0; i < this.state.users_goals.length; i++){
                 if(i !== index){
@@ -110,11 +112,13 @@ class App extends React.Component {
                     users_goals[i].click -= 1
                     users_goals[i].click_index = day_index
                     clicked_done.push(day_click)
+                    what_done_often_arr.push(users_goals[i].often)
                     this.setState({what_done_often : users_goals[i].often})
                 }
             }
         }
         
+        this.setState({what_done_often_arr : what_done_often_arr})
 
         //console.log(users_goals, clicked_done)
 
@@ -193,7 +197,8 @@ class App extends React.Component {
                                         onGoalDoneClick : this.handleGoalDoneClick,  
                                         onUserPoints : this.state.user_goals_points,
                                         onClickedDone : this.state.clicked_done,
-                                        onOftenDone : this.state.what_done_often
+                                        onOftenDone : this.state.what_done_often,
+                                        OnWhat_done_often_arr : this.state.what_done_often_arr
                                     }
                                 }
                             />

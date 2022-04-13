@@ -3,114 +3,135 @@ import React from 'react';
 class cont extends Component {
     state = {  } 
     render() { 
- 
-        // *******************************************
-        
+        for(let i = 0; i <= user_scheds.length - 1; i++){
+            let new_Date = this.state.date
+            new_Date.setDate(this.state.day_clicked)
+            let day_index = new_Date.getDay()
 
-
-            // 
-            let how_often = this.props.args.user_reminders[ this.props.args.user_reminders_counter].often
-
-            let if_week = false, if_month = false, if_year = false
-            for(let i = 0; i < this.props.args.user_reminders.length; i++){
-                if(this.props.args.user_reminders[i].often === "Every week"){
-                    if_week = true
-                }
-                if(this.props.args.user_reminders[i].often === "Every month"){
-                    if_month = true
-                }
-                if(this.props.args.user_reminders[i].often === "Every year"){
-                    if_year = true
-                }
-            }
-
-            if(!if_week && !if_month && !if_year && how_often !== ""){
-                how_often = "Every day"
-            }
-            else if(if_week && !if_month && !if_year){
-                how_often = "Every week"
-            }
-            else if(if_month && !if_year){
-                how_often = "Every month"
-            }
-            else if(if_year){
-                how_often = "Every year"
-            }
-
-            let asterisk_often
-            
-            let days_arr = []
-            for(let i = 0; i < this.props.args.user_reminders.length; i++){
-                days_arr.push(this.props.args.user_reminders[i].day)
-            }
-
-            if(how_often === "Every day"){
-                asterisk_often = "block"
-            }
-            else if(how_often === "Every week"){
-                console.log(curr_day_index_month)
-                if(val.cn !== 'next-date' && days_arr.includes(val.num) && curr_day_index_month === 2){
-                    asterisk_often = "block"
-                    this.state.date.setDate(val.num)
-                    day_index = this.state.date.getDay() + 1
-                }else{
-                    asterisk_often = "none"
-                }  
-                //console.log(val.num, per_week, day_index)
-                if(per_week === day_index){
-                    asterisk_often = "block"
-                }
-            }
-            // else if(how_often === "Every month"){
-            //     switch(per_week) {
-            //         case 1 : asterisk_often = "block"; break;
-            //         case 2 : asterisk_often = "none"; break;
-            //         case 3 : asterisk_often = "block"; break;
-            //         case 4 : asterisk_often = "none"; break;
-            //         case 5 : asterisk_often = "block"; break;
-            //         case 6 : asterisk_often = "none"; break;
-            //         case 7 : asterisk_often = "none"; break;
-            //         default : break;
-            //     }
-            // }else if(how_often === "Every year"){
-
-            //     switch(per_week) {
-            //         case 1 : asterisk_often = "block"; break;
-            //         case 2 : asterisk_often = "none"; break;
-            //         case 3 : asterisk_often = "block"; break;
-            //         case 4 : asterisk_often = "none"; break;
-            //         case 5 : asterisk_often = "block"; break;
-            //         case 6 : asterisk_often = "block"; break;
-            //         case 7 : asterisk_often = "block"; break;
-            //         default : break;
+            // let same = 0
+            // for(let elem of click_index_val){
+            //     if(elem === this.state.day_clicked){
+            //         same += 1
             //     }
             // }
-            else{
-                asterisk_often = "none"
-            }
 
-            if(per_week === 7){
-                per_week = 1
-            }else{
-                per_week += 1
-            }
-            //console.log(val.asterisk)
-            return(
-                {
-                    cn : val.cn,
-                    num : val.num,
-                    key : val.key,
-                    asterisk : asterisk_often
-                    //asterisk : (val.asterisk === "block") ? "block" : asterisk_often
+            // if(same > 1){
+            //     schedsComponents = []
+            // }else{
+            //     schedsComponents = schedsComponents_thrice
+            // }
+
+            if(day_index === 0 && schedsComponents_once.length !== 0){
+                if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
+                    schedsComponents = schedsComponents_once 
                 }
-            )
-
-
-            // asdf
-        return (
-            <h1>Kyla Denzelle Samson Olmo</h1>
-        );
-
+                else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        if(this.props.args.onOftenDone === "Once a week"){
+                            schedsComponents = schedsComponents_thrice
+                        }
+                        if(this.props.args.onOftenDone === "3 times a week"){
+                            schedsComponents = schedsComponents_once
+                        }
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice)
+                    }
+                }
+                else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        if(this.props.args.onOftenDone === "Once a week"){
+                            schedsComponents = schedsComponents_five
+                        }
+                        if(this.props.args.onOftenDone === "5 times a week"){
+                            schedsComponents = schedsComponents_once
+                        }
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_five)
+                    }
+                }
+                else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        if(this.props.args.onOftenDone === "Once a week"){
+                            schedsComponents = schedsComponents_every
+                        }
+                        if(this.props.args.onOftenDone === "Every day"){
+                            schedsComponents = schedsComponents_once
+                        }
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_every)
+                    }
+                }
+                else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five)
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five)
+                    }
+                }
+                else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_every)
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_every)
+                    }
+                }
+                else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_five.concat(schedsComponents_every)
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_five,schedsComponents_every)
+                    }
+                }
+                else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
+                    }else{
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five,schedsComponents_every)
+                    }
+                }
+                //else if()
+            }
+            else if((day_index === 0 || day_index === 2 || day_index === 4) && schedsComponents_thrice.length !== 0){
+                if(schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
+                    schedsComponents = schedsComponents_thrice 
+                }
+                else if(schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_five
+                    }else{
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five)
+                    }
+                }
+                else if(schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_every
+                    }else{
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_every)
+                    }
+                }
+                else if(schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_five.concat(schedsComponents_every)
+                    }else{
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
+                    }
+                }   
+            }
+            else if((day_index === 0 || day_index === 2 || day_index === 4 || day_index === 5 || day_index === 6) && schedsComponents_five.length !== 0){
+                if(schedsComponents_every.length === 0){
+                    schedsComponents = schedsComponents_five
+                }else{
+                    if(click_index_val.includes(this.state.day_clicked)){
+                        schedsComponents = schedsComponents_every
+                    }else{
+                        schedsComponents = schedsComponents_five.concat(schedsComponents_every)
+                    }  
+                }
+            }
+            else if(day_index === 0 || day_index === 1 || day_index === 2 || day_index === 3 || day_index === 4 || day_index === 5 || day_index === 6) {
+                schedsComponents = schedsComponents_every
+            }
+        }
     }
 }
  
