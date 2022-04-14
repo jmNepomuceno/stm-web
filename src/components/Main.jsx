@@ -692,30 +692,34 @@ class Main extends React.Component {
             //     schedsComponents = schedsComponents_thrice
             // }
 
-            let indexes = 0
+            let indexes = 0, indexes_count = 0
             for(let j = 0; j < click_index_val.length; j++){
                 if(click_index_val[j] === this.state.day_clicked){
                     indexes = j
+                    indexes_count += 1
                 }
             }
-
+            
             let indexes_arr = []
             for(let j = 0; j < click_index_val.length; j++){
                 if(click_index_val[j] === this.state.day_clicked){
                     indexes_arr.push(j)
                 }
             }
-
+            //console.log(indexes_arr)
             if(day_index === 0 && schedsComponents_once.length !== 0){
                 if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
                     schedsComponents = schedsComponents_once 
                 }
                 else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
                     if(click_index_val.includes(this.state.day_clicked)){
-                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Once a week"){
+                        if(indexes_count === 2){
+                            schedsComponents = []
+                        }
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Once a week" && indexes_count !== 2){
                             schedsComponents = schedsComponents_thrice
                         }
-                        if(this.props.args.OnWhat_done_often_arr[indexes] === "3 times a week"){
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "3 times a week" && indexes_count !== 2){
                             schedsComponents = schedsComponents_once
                         }
                     }else{
@@ -724,10 +728,13 @@ class Main extends React.Component {
                 }
                 else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
                     if(click_index_val.includes(this.state.day_clicked)){
-                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Once a week"){
+                        if(indexes_count === 2){
+                            schedsComponents = []
+                        }
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Once a week" && indexes_count !== 2){
                             schedsComponents = schedsComponents_five
                         }
-                        if(this.props.args.OnWhat_done_often_arr[indexes] === "5 times a week"){
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "5 times a week" && indexes_count !== 2){
                             schedsComponents = schedsComponents_once
                         }
                     }else{
@@ -736,10 +743,13 @@ class Main extends React.Component {
                 }
                 else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
                     if(click_index_val.includes(this.state.day_clicked)){
-                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Once a week"){
+                        if(indexes_count === 2){
+                            schedsComponents = []
+                        }
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Once a week" && indexes_count !== 2){
                             schedsComponents = schedsComponents_every
                         }
-                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Every day"){
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Every day" && indexes_count !== 2){
                             schedsComponents = schedsComponents_once
                         }
                     }else{
@@ -751,37 +761,43 @@ class Main extends React.Component {
                         schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five)
                         let once_done = false, three_done = false, five_done = false
 
-                        for(let elem of this.props.args.OnWhat_done_often_arr){
-                            if(elem === "Once a week"){
-                                schedsComponents.splice(0, 1);
-                                once_done = true
-                            } // once 3 5 
-                            else if(elem === "3 times a week"){
-                                if(once_done && five_done){
+                        for(let elem of indexes_arr){
+                            if(once_done && three_done && five_done){
+                                schedsComponents = []
+                            }else{
+                                if(this.props.args.OnWhat_done_often_arr[elem] === "Once a week"){
                                     schedsComponents.splice(0, 1);
+                                    once_done = true
+                                } // once 3 5 
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "3 times a week"){
+                                    if(once_done && five_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !five_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(!once_done && five_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && !five_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    three_done = true
                                 }
-                                else if(once_done && !five_done){
-                                    schedsComponents.splice(0, 1);
-                                }
-                                else if(!once_done && five_done){
-                                    schedsComponents.splice(1, 1);
-                                }
-                                else if(!once_done && !five_done){
-                                    schedsComponents.splice(1, 1);
-                                }
-                            }
-                            else if(elem === "5 times a week"){
-                                if(once_done && three_done){
-                                    schedsComponents.splice(0, 1);
-                                }
-                                else if(once_done && !three_done){
-                                    schedsComponents.splice(1, 1);
-                                }
-                                else if(!once_done && three_done){
-                                    schedsComponents.splice(1, 1);
-                                }
-                                else if(!once_done && !three_done){
-                                    schedsComponents.splice(2, 1);
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "5 times a week"){
+                                    if(once_done && three_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !three_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && three_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && !three_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+                                    five_done = true
                                 }
                             }
                         }
@@ -791,26 +807,209 @@ class Main extends React.Component {
                 }
                 else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
                     if(click_index_val.includes(this.state.day_clicked)){
-                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_every)
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_every)
+                        let once_done = false, three_done = false, every_done = false
+
+                        for(let elem of indexes_arr){
+                            if(once_done && three_done && every_done){
+                                schedsComponents = []
+                            }else{
+                                if(this.props.args.OnWhat_done_often_arr[elem] === "Once a week"){
+                                    schedsComponents.splice(0, 1);
+                                    once_done = true
+                                } // once 3 5 
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "3 times a week"){
+                                    if(once_done && every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(!once_done && every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && !every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    three_done = true
+                                }
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "Every day"){
+                                    if(once_done && three_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !three_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && three_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && !three_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+                                    every_done = true
+                                }
+                            }
+                        }
                     }else{
                         schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_every)
                     }
                 }
                 else if(schedsComponents_thrice.length === 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
                     if(click_index_val.includes(this.state.day_clicked)){
-                        schedsComponents = schedsComponents_five.concat(schedsComponents_every)
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_five,schedsComponents_every)
+                        let once_done = false, five_done = false, every_done = false
+
+                        for(let elem of indexes_arr){
+                            if(once_done && five_done && every_done){
+                                schedsComponents = []
+                            }else{
+                                if(this.props.args.OnWhat_done_often_arr[elem] === "Once a week"){
+                                    schedsComponents.splice(0, 1);
+                                    once_done = true
+                                } // once 3 5 
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "5 times a week"){
+                                    if(once_done && every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(!once_done && every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && !every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    five_done = true
+                                }
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "Every day"){
+                                    if(once_done && five_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !five_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && five_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && !five_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+                                    every_done = true
+                                }
+                            }
+                        }
                     }else{
                         schedsComponents = schedsComponents_once.concat(schedsComponents_five,schedsComponents_every)
                     }
                 }
                 else if(schedsComponents_thrice.length !== 0 && schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
                     if(click_index_val.includes(this.state.day_clicked)){
-                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
+                        //schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
+                        schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five,schedsComponents_every)
+                        let once_done = false, three_done = false, five_done = false, every_done = false
+
+                        for(let elem of indexes_arr){
+                            if(once_done && three_done && five_done && every_done){
+                                schedsComponents = []
+                            }else{
+                                if(this.props.args.OnWhat_done_often_arr[elem] === "Once a week"){
+                                    schedsComponents.splice(0, 1);
+                                    once_done = true
+                                }
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "3 times a week"){
+                                    if(once_done && five_done && every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !five_done && !every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(!once_done && five_done && !every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && !five_done && every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+
+                                    else if(once_done && five_done && !every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !five_done && every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(!once_done && five_done && every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+
+                                    else if(!once_done && !five_done && !every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    three_done = true
+                                }  // 1 3 5 E
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "5 times a week"){
+                                    if(once_done && three_done && every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !three_done && !every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && three_done && !every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!once_done && !three_done && every_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+
+                                    else if(!once_done && three_done && every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(once_done && !three_done && every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(once_done && three_done && !every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+
+                                    else if(!once_done && !three_done && !every_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+                                    five_done = true
+                                } // 1 3 5 E
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "Every day"){
+                                    if(once_done && three_done && five_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(once_done && !three_done && !five_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+                                    else if(!once_done && three_done && !five_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+                                    else if(!once_done && !three_done && five_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+
+                                    else if(!once_done && three_done && five_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(once_done && !three_done && five_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+                                    else if(once_done && three_done && !five_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+
+                                    else if(!once_done && !three_done && !five_done){
+                                        schedsComponents.splice(3, 1);
+                                    }
+                                    every_done = true
+                                }
+                            }
+                        }
                     }else{
                         schedsComponents = schedsComponents_once.concat(schedsComponents_thrice,schedsComponents_five,schedsComponents_every)
                     }
                 }
-                //else if()
             }
             else if((day_index === 0 || day_index === 2 || day_index === 4) && schedsComponents_thrice.length !== 0){
                 if(schedsComponents_five.length === 0 && schedsComponents_every.length === 0){
