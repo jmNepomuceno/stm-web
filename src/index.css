@@ -877,6 +877,11 @@ $desktop : 1200px; */
 
 /* SIGN COMPONENTS */
 @media (max-width: 576px){
+    .home-main-div .goal-points-div{
+        right:20%;
+        width:45%;
+        height:90%;
+    }
     .home-div #home-img{
         width:100%;
     }
