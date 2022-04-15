@@ -386,7 +386,6 @@ class Main extends React.Component {
             }
         }
 
-        //console.log("array per account " , arr_per_acc)
         //console.log( this.props.args.user_goals,this.props.args.user_goals_counter )
         
         let current_click_val = 0, click_index_val = []
@@ -424,6 +423,7 @@ class Main extends React.Component {
                 how_often = "Every day"
             }
 
+            let current_click_val_arr = []
             for(let i = 0; i < this.props.args.user_goals.length; i++){
                 //console.log(this.props.args.user_goals[i].click, this.props.args.user_goals[i].click_index)
                 if(this.props.args.onOftenDone === this.props.args.user_goals[i].often){
@@ -439,23 +439,44 @@ class Main extends React.Component {
                         current_click_val = this.props.args.user_goals[i].click
                         click_index_val = this.props.args.onClickedDone
                     }
-                    else if(this.props.args.user_goals[i].click < 18980){
+                    else if(this.props.args.user_goals[i].click < 364){
                         current_click_val = this.props.args.user_goals[i].click
                         click_index_val = this.props.args.onClickedDone
-                    }
+                    }   
+                }
+                if(this.props.args.user_goals[i].often === "Once a week" && this.props.args.user_goals[i].click < 52){
+                    current_click_val_arr.push(this.props.args.user_goals[i].click)
+                }else if(this.props.args.user_goals[i].often === "3 times a week" && this.props.args.user_goals[i].click < 156){
+                    current_click_val_arr.push(this.props.args.user_goals[i].click)
+                }else if(this.props.args.user_goals[i].often === "5 times a week" && this.props.args.user_goals[i].click < 260){
+                    current_click_val_arr.push(this.props.args.user_goals[i].click)
+                }else if(this.props.args.user_goals[i].often === "Every day" && this.props.args.user_goals[i].click < 364){
+                    current_click_val_arr.push(this.props.args.user_goals[i].click)
                 }
             }
+            
+            //console.log(current_click_val_arr)
             //console.log(this.props.args.OnWhat_done_often_arr, click_index_val)
             let asterisk_often
             
             if(how_often === "Every day"){
                 asterisk_often = "block"
 
-                if(current_click_val < 18980 && current_click_val !== 0 &&
+                if(current_click_val < 364 && current_click_val !== 0 &&
                     !if_three && !if_five && !if_once){
-                    for(let i = 0; i < click_index_val.length; i++){
-                        if(val.num === click_index_val[i]){
-                            asterisk_often = "none"
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
+                        }
+                }
+
+                if(current_click_val < 364 && current_click_val !== 0){
+                    if(this.props.args.user_goals.length - 1 === current_click_val_arr.length){
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
                         }
                     }
                 }
@@ -474,9 +495,19 @@ class Main extends React.Component {
                 //console.log(if_three, if_five, if_everyday)
                 if(current_click_val < 52 && current_click_val !== 0 &&
                     !if_three && !if_five && !if_everyday){
-                    for(let i = 0; i < click_index_val.length; i++){
-                        if(val.num === click_index_val[i]){
-                            asterisk_often = "none"
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
+                        }
+                }
+
+                if(current_click_val < 52 && current_click_val !== 0){
+                    if(this.props.args.user_goals.length - 1 === current_click_val_arr.length){
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
                         }
                     }
                 }
@@ -495,9 +526,19 @@ class Main extends React.Component {
 
                 if(current_click_val < 156 && current_click_val !== 0 &&
                     !if_once && !if_five && !if_everyday){
-                    for(let i = 0; i < click_index_val.length; i++){
-                        if(val.num === click_index_val[i]){
-                            asterisk_often = "none"
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
+                        }
+                }
+
+                if(current_click_val < 156 && current_click_val !== 0){
+                    if(this.props.args.user_goals.length - 1 === current_click_val_arr.length){
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
                         }
                     }
                 }
@@ -516,9 +557,19 @@ class Main extends React.Component {
 
                 if(current_click_val < 260 && current_click_val !== 0 &&
                     !if_once && !if_three && !if_everyday){
-                    for(let i = 0; i < click_index_val.length; i++){
-                        if(val.num === click_index_val[i]){
-                            asterisk_often = "none"
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
+                        }
+                }
+
+                if(current_click_val < 260 && current_click_val !== 0){
+                    if(this.props.args.user_goals.length - 1 === current_click_val_arr.length){
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
                         }
                     }
                 }
@@ -579,15 +630,15 @@ class Main extends React.Component {
         })
 
         let user_scheds_thrice = user_scheds.filter((val)=>{
-            return val.often === "3 times a week"
+            return val.often === "3 times a week" //&& val.click === 156
         })
 
         let user_scheds_five = user_scheds.filter((val)=>{
-            return val.often === "5 times a week"
+            return val.often === "5 times a week" //&& val.click === 260
         })
 
         let user_scheds_every = user_scheds.filter((val)=>{
-            return val.often === "Every day"
+            return val.often === "Every day" //&& val.click === 364
         })
 
         //console.log(user_scheds_once)
@@ -678,19 +729,6 @@ class Main extends React.Component {
             let new_Date = this.state.date
             new_Date.setDate(this.state.day_clicked)
             let day_index = new_Date.getDay()
-
-            // let same = 0
-            // for(let elem of click_index_val){
-            //     if(elem === this.state.day_clicked){
-            //         same += 1
-            //     }
-            // }
-
-            // if(same > 1){
-            //     schedsComponents = []
-            // }else{
-            //     schedsComponents = schedsComponents_thrice
-            // }
 
             let indexes = 0, indexes_count = 0
             for(let j = 0; j < click_index_val.length; j++){
@@ -1017,21 +1055,79 @@ class Main extends React.Component {
                 }
                 else if(schedsComponents_five.length !== 0 && schedsComponents_every.length === 0){
                     if(click_index_val.includes(this.state.day_clicked)){
-                        schedsComponents = schedsComponents_five
+                        if(indexes_count === 2){
+                            schedsComponents = []
+                        }
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "3 times a week" && indexes_count !== 2){
+                            schedsComponents = schedsComponents_five
+                        }
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "5 times a week" && indexes_count !== 2){
+                            schedsComponents = schedsComponents_thrice
+                        }
                     }else{
                         schedsComponents = schedsComponents_thrice.concat(schedsComponents_five)
                     }
                 }
                 else if(schedsComponents_five.length === 0 && schedsComponents_every.length !== 0){
                     if(click_index_val.includes(this.state.day_clicked)){
-                        schedsComponents = schedsComponents_every
+                        if(indexes_count === 2){
+                            schedsComponents = []
+                        }
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "3 times a week" && indexes_count !== 2){
+                            schedsComponents = schedsComponents_every
+                        }
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Every day" && indexes_count !== 2){
+                            schedsComponents = schedsComponents_thrice
+                        }
                     }else{
                         schedsComponents = schedsComponents_thrice.concat(schedsComponents_every)
                     }
                 }
                 else if(schedsComponents_five.length !== 0 && schedsComponents_every.length !== 0){
                     if(click_index_val.includes(this.state.day_clicked)){
-                        schedsComponents = schedsComponents_five.concat(schedsComponents_every)
+                        schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
+                        let three_done = false, five_done = false, every_done = false
+
+                        for(let elem of indexes_arr){
+                            if(three_done && five_done && every_done){
+                                schedsComponents = []
+                            }else{
+                                if(this.props.args.OnWhat_done_often_arr[elem] === "3 times a week"){
+                                    schedsComponents.splice(0, 1);
+                                    three_done = true
+                                } // once 3 5 
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "5 times a week"){
+                                    if(three_done && every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(three_done && !every_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(!three_done && every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!three_done && !every_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    five_done = true
+                                }
+                                else if(this.props.args.OnWhat_done_often_arr[elem] === "Every day"){
+                                    if(three_done && five_done){
+                                        schedsComponents.splice(0, 1);
+                                    }
+                                    else if(three_done && !five_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!three_done && five_done){
+                                        schedsComponents.splice(1, 1);
+                                    }
+                                    else if(!three_done && !five_done){
+                                        schedsComponents.splice(2, 1);
+                                    }
+                                    every_done = true
+                                }
+                            }
+                        }
                     }else{
                         schedsComponents = schedsComponents_thrice.concat(schedsComponents_five,schedsComponents_every)
                     }
@@ -1042,7 +1138,16 @@ class Main extends React.Component {
                     schedsComponents = schedsComponents_five
                 }else{
                     if(click_index_val.includes(this.state.day_clicked)){
-                        schedsComponents = schedsComponents_every
+                        if(indexes_count === 2){
+                            schedsComponents = []
+                        }
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "5 times a week" && indexes_count !== 2){
+                            schedsComponents = schedsComponents_every
+                        }
+                        if(this.props.args.OnWhat_done_often_arr[indexes] === "Every day" && indexes_count !== 2){
+                            schedsComponents = schedsComponents_five
+                        }
+
                     }else{
                         schedsComponents = schedsComponents_five.concat(schedsComponents_every)
                     }  
