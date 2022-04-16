@@ -495,9 +495,16 @@ class Main extends React.Component {
                             }
                         }
                 }
-
+                console.log(val.num, current_click_val_arr[val.num])
                 if(current_click_val < 364 && current_click_val !== 0 && val.cn === ""){
                     if(this.props.args.user_goals.length - 1 === current_click_val_arr[val.num].length){
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
+                        }
+                    }
+                    else if(current_click_val_arr[val.num] > 350){
                         for(let elem of click_index_val){
                             if(val.num === elem){
                                 asterisk_often = "none"
@@ -535,6 +542,13 @@ class Main extends React.Component {
                             }
                         }
                     }
+                    else if(current_click_val_arr[val.num] > 45){
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
+                        }
+                    }
                 }
             }
             else if(how_often === "3 times a week"){
@@ -559,7 +573,15 @@ class Main extends React.Component {
                 }
 
                 if(current_click_val < 156 && current_click_val !== 0 && val.cn === ""){
+                    //console.log(current_click_val_arr[val.num])
                     if(this.props.args.user_goals.length - 1 === current_click_val_arr[val.num].length){
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
+                        }
+                    }
+                    else if(current_click_val_arr[val.num] > 150){
                         for(let elem of click_index_val){
                             if(val.num === elem){
                                 asterisk_often = "none"
@@ -591,6 +613,13 @@ class Main extends React.Component {
 
                 if(current_click_val < 260 && current_click_val !== 0 && val.cn === ""){
                     if(this.props.args.user_goals.length - 1 === current_click_val_arr[val.num].length){
+                        for(let elem of click_index_val){
+                            if(val.num === elem){
+                                asterisk_often = "none"
+                            }
+                        }
+                    }
+                    else if(current_click_val_arr[val.num] > 250){
                         for(let elem of click_index_val){
                             if(val.num === elem){
                                 asterisk_often = "none"
